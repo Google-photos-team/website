@@ -1,0 +1,9 @@
+{
+  "title": "Welcome {{name}}, to react using react-i18next fully type-safe",
+  "simpleLink": "go to simple route",
+  "homeLink": "go back to main page",
+  "description": {
+    "part1": "This is a simple example.",
+    "part2": "😉"
+  }
+}
