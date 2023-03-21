@@ -1,5 +1,17 @@
 import styled, { css } from "styled-components";
+/*
+    !HOW TO USE
+    <Button margin='16px 8px' size='large'>CLICK ME</Button>
+    <Button margin='16px 8px' color='secondary' size='large'>CLICK ME</Button>
 
+    <Button margin='16px 8px' size='medium'>CLICK ME</Button>
+    <Button margin='16px 8px' color='secondary' size='medium'>CLICK ME</Button>
+
+    <Button margin='16px 8px' size='small'>CLICK ME</Button>
+    <Button margin='16px 8px' color='secondary' size='small'>CLICK ME</Button>
+
+    <Button fullWidth>CLICK ME</Button>
+*/
 interface IProps {
     color?: "primary" | "secondary",
     size?: "large" | "medium" | "small",
