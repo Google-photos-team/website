@@ -7,6 +7,7 @@ export const Theme: DefaultTheme = {
       lightBlue:"#09A7BC",
       semiBlack:"#1A1A1A",
       semiWhite:"#F4F4F4",
+      gray:"#CCC",
       lightRed:"#FF3333"
     },
     shades:{

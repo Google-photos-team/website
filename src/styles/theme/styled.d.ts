@@ -5,17 +5,18 @@ interface IPalette {
 }
 declare module 'styled-components' {
   export interface DefaultTheme {
-    colors:{
-      primary:{
-        darkBlue:string
-        lightBlue:string
-        semiBlack:string
-        semiWhite:string
-        lightRed:string
+    colors: {
+      primary: {
+        darkBlue: string
+        lightBlue: string
+        semiBlack: string
+        semiWhite: string
+        gray: string,
+        lightRed: string
       }
-      shades:{
-        white:string
-        black:string
+      shades: {
+        white: string
+        black: string
       }
     }
   }

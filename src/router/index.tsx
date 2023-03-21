@@ -1,4 +1,4 @@
-import React, { lazy } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router';
 // pages
 const Login = lazy(() => import("../pages/Login"));
@@ -21,8 +21,16 @@ export const PATHS = {
 const Router = () => {
     return (
         <Routes>
-            <Route path={PATHS.LOGIN} element={<Login />} />
-            <Route path={PATHS.SIGN_UP} element={<Signup />} />
+            <Route path={PATHS.LOGIN} element={
+                <Suspense fallback={<>loading</>}>
+                    <Login />
+                </Suspense>
+            } />
+            <Route path={PATHS.SIGN_UP} element={
+                <Suspense fallback={<>loading</>}>
+                    <Signup />
+                </Suspense>
+            } />
 
             <Route path={PATHS.HOME} element={<Home />} />
             <Route path={PATHS.FOLDER + "/:id"} element={<Folder />} />
