@@ -1,8 +1,11 @@
 import React from 'react'
+import Style from './style'
 
 const Home = () => {
     return (
-        <div>Home</div>
+        <Style className='containerWidth'>
+            s
+        </Style>
     )
 }
 
