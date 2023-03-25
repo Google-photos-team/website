@@ -1,12 +1,20 @@
 import { createGlobalStyle } from "styled-components";
 
-export default createGlobalStyle`
+interface props{
+  noPadding: boolean;
+}
+
+export default createGlobalStyle<props>`
   *{
     font-family: 'Inter', sans-serif;
     padding: 0;
     margin: 0;
     font-weight: 500;
     box-sizing: border-box;
+  }
+
+  body{
+    padding-top: ${({noPadding}) => noPadding ? "" : "140px"};
   }
 
 
