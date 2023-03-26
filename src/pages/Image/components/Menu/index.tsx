@@ -1,14 +1,20 @@
 import React from "react";
-import menu from '../../../../assets/ImagePage/menu.png'
+import { H5 } from "../../../../components/Typography";
+import './style'
+import MenuStyle from "./style";
 
+const Menu = () => {
+    return (
+        <MenuStyle>
+            <div className="menu">
 
-const Menu = () =>{
-    return(
-        <div className="menu">
-            <img src={menu} alt="menu" onClick={(e)=>{
-                console.log("first")
-            }}/>
-        </div>
+                <div className="menuTypes">
+                    <H5 className="move">Move</H5>
+                    <H5 className="delete">Delete</H5>
+                </div>
+
+            </div>
+        </MenuStyle>
     );
 }
 

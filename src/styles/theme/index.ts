@@ -8,7 +8,9 @@ export const Theme: DefaultTheme = {
       semiBlack:"#1A1A1A",
       semiWhite:"#F4F4F4",
       gray:"#CCC",
-      lightRed:"#FF3333"
+      lightRed:"#FF3333",
+      skyBlue:"#09A7BC",
+      skyBlueHover:"#62DDED"
     },
     shades:{
       white:"#FFFFFF",
