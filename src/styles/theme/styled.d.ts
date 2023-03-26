@@ -12,7 +12,9 @@ declare module 'styled-components' {
         semiBlack: string
         semiWhite: string
         gray: string,
-        lightRed: string
+        lightRed: string,
+        skyBlue: string, 
+        skyBlueHover: string
       }
       shades: {
         white: string
