@@ -7,6 +7,11 @@ import Hashtags from './components/Hashtags'
 import Menu from './components/Menu'
 
 const Image: React.FC = () => {
+    const [openMenu, setOpenMenu] = useState(false)
+    const [closeMenu, setCloseMenu] = useState(false)
+
+
+
     return (
         <Styles className='containerWidth' >
 
@@ -43,12 +48,19 @@ const Image: React.FC = () => {
                 </div>
 
                 <div className="menu">
-                    <img src={menu} alt="menu" onClick={(e) => {
-                        console.log("first")
-                    }} />
+                    <img src={menu} alt="menu" 
+                    onClick={() => {
+                            setOpenMenu(true) 
+                            setCloseMenu(true)}}
+                    />
+                    {openMenu === true ? <Menu />:"" && closeMenu === true ? "":""}
                 </div>
 
-                <Menu />
+               
+                
+
+                
+                
                 
 
             </div>
