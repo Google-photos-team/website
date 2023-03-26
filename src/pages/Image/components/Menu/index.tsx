@@ -12,7 +12,6 @@ const Menu = () => {
                     <H5 className="move">Move</H5>
                     <H5 className="delete">Delete</H5>
                 </div>
-
             </div>
         </MenuStyle>
     );
