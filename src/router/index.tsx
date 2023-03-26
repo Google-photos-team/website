@@ -32,12 +32,32 @@ const Router = () => {
                 </Suspense>
             } />
 
-            <Route path={PATHS.HOME} element={<Home />} />
-            <Route path={PATHS.FOLDER + "/:id"} element={<Folder />} />
-            <Route path={PATHS.IMAGE + "/:id"} element={<Image />} />
-            <Route path={PATHS.SETTINGS} element={<Settings />} />
+            <Route path={PATHS.HOME} element={
+                <Suspense fallback={<>loading</>}>
+                    <Home />
+                </Suspense>
+            } />
+            <Route path={PATHS.FOLDER + "/:id"} element={
+                <Suspense fallback={<>loading</>}>
+                    <Folder />
+                </Suspense>
+            } />
+            <Route path={PATHS.IMAGE + "/:id"} element={
+                <Suspense fallback={<>loading</>}>
+                    <Image />
+                </Suspense>
+            } />
+            <Route path={PATHS.SETTINGS} element={
+                <Suspense fallback={<>loading</>}>
+                    <Settings />
+                </Suspense>
+            } />
 
-            <Route path={"*"} element={<NotFound />} />
+            <Route path={"*"} element={
+                <Suspense fallback={<>loading</>}>
+                    <NotFound />
+                </Suspense>
+            } />
         </Routes>
     )
 }
