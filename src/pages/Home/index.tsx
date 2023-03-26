@@ -5,6 +5,7 @@ import FolderImg from "../../assets/FolderImg.svg"
 import AddIcon from "../../assets/AddIcon.svg"
 import Modal from '../../components/Modal'
 import AddFolder from '../../modals/AddFolder'
+import CustomLink from '../../components/CustomLink'
 
 const Home = () => {
     const [addFileModal,setAddFileModal] = useState(false);
@@ -15,10 +16,12 @@ const Home = () => {
                     <img src={AddIcon} alt="" />
                 </div>
                 {data.map(e => (
-                    <div key={e.id} className="folder">
-                        <img src={FolderImg} alt="" />
-                        {e.name}
-                    </div>
+                    <CustomLink key={e.id} to={`/folder/${e.id}`}>
+                        <div className="folder">
+                            <img src={FolderImg} alt="" />
+                            {e.name}
+                        </div>
+                    </CustomLink>
                 ))}
             </Style>
             <Modal
