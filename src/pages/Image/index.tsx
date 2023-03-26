@@ -15,6 +15,16 @@ const Image: React.FC = () => {
     return (
         <Styles className='containerWidth' >
 
+            <div className="menu">
+                <img src={menu} alt="menu"
+                    onClick={() => {
+                        setOpenMenu(true)
+                        setCloseMenu(true)
+                    }}
+                />
+                {openMenu === true ? <Menu /> : "" && closeMenu === true ? "" : ""}
+            </div>
+
             <div className='item section__padding'>
 
                 <div className="itemImage">
@@ -47,21 +57,14 @@ const Image: React.FC = () => {
                     <Hashtags />
                 </div>
 
-                <div className="menu">
-                    <img src={menu} alt="menu" 
-                    onClick={() => {
-                            setOpenMenu(true) 
-                            setCloseMenu(true)}}
-                    />
-                    {openMenu === true ? <Menu />:"" && closeMenu === true ? "":""}
-                </div>
 
-               
-                
 
-                
-                
-                
+
+
+
+
+
+
 
             </div>
 
