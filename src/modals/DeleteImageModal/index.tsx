@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import InputFiled from '../../components/InputFiled';
-import { Body1 } from '../../components/Typography';
+import { Body1, Body3 } from '../../components/Typography';
 import Style from './style'
 
 interface props {
@@ -10,7 +9,7 @@ interface props {
   exitIcon: React.ReactNode,
 }
 
-const MoveImage = ({ className, close, onClick, exitIcon }: props) => {
+const DeleteImage = ({ className, close, onClick, exitIcon }: props) => {
   const [text, setText] = useState("");
 
   const handleClick = (e: any) => {
@@ -26,16 +25,8 @@ const MoveImage = ({ className, close, onClick, exitIcon }: props) => {
   return (
     <Style className={className} onClick={handleClick}>
       {exitIcon}
-      <Body1 weight={500} color="black">Move To</Body1>
-
-      <InputFiled
-        label=''
-        name="Move Image"
-        onChange={handelChange}
-        value={text}
-        fullWidth
-        placeholder='To' />
-
+      <Body1 weight={500} color="black">Sure you want to delete?</Body1>
+      <Body3 weight={300}>this action will lead to deleting this image permanently , you can't get it back later</Body3>
 
       <div className="buttons">
 
@@ -43,7 +34,7 @@ const MoveImage = ({ className, close, onClick, exitIcon }: props) => {
           <Body1 weight={700} color="semiWhite">No,cancel</Body1>
         </button>
         <button className="createButton" onClick={() => close()}>
-          <Body1 weight={700} color="semiWhite" >Move</Body1>
+          <Body1 weight={700} color="semiWhite" >Delete</Body1>
         </button>
 
       </div>
@@ -52,4 +43,4 @@ const MoveImage = ({ className, close, onClick, exitIcon }: props) => {
   )
 }
 
-export default MoveImage
+export default DeleteImage
