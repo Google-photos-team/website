@@ -4,10 +4,10 @@ const Style = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
+    flex-direction: column;
     height: 100vh;
-    padding: 200px;
-
+    
     .login_left_image{
         height: 100dvh;
         position: absolute;
@@ -29,7 +29,8 @@ const Style = styled.div`
     }
 
     .form_container{
-        width: 70%;
+        width: 60%;
+        max-width: 1000px;
         background-color: ${props => props.theme.colors.shades.white};
         border-radius: 1.5rem;
         box-shadow: 0 0 10px 0 #CCC;
@@ -46,6 +47,29 @@ const Style = styled.div`
             margin-bottom: .5rem;
             font-size: 1.5rem;
             color: ${props => props.theme.colors.primary.lightBlue};
+        }
+    }
+
+    
+    @media (max-width:1400px) {
+        .form_container{
+            width: 60% !important;
+        }
+    }
+
+    @media (max-width:1200px) {
+        .form_container{
+            width: 90% !important;
+        }
+    }
+
+    @media (max-width:920px) {
+        .form_container{
+            width: calc(100% - 40px) !important;
+        }
+
+        .login_right_image{
+            display: none;
         }
     }
 `
