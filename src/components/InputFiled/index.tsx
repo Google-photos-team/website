@@ -10,7 +10,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
     fullWidth?: boolean,
     error?: string,
     type?: "text" | "password" | "email",
-    className?: ""
+    className?: string
 }
 
 const InputFiled = ({ label, value, fullWidth, error, type = "text", className = "", onChange, ...rest }: IProps) => {

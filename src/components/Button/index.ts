@@ -13,7 +13,7 @@ import styled, { css } from "styled-components";
     <Button fullWidth>CLICK ME</Button>
 */
 interface IProps {
-    color?: "primary" | "secondary",
+    color?: "primary" | "secondary" | "danger",
     size?: "large" | "medium" | "small",
     margin?: string,
     fullWidth?: boolean
@@ -42,7 +42,8 @@ const smallStyle = css`
 `
 const Button = styled.button<IProps>`
     ${props => props.fullWidth ? "width:100%;" : ""}
-    background-color:${props => props.color === "secondary" ? props.theme.colors.primary.semiWhite : props.theme.colors.primary.lightBlue};
+    background-color:${props => props.color === "secondary" ?
+        props.theme.colors.primary.semiWhite : props.color === "danger" ? props.theme.colors.primary.lightRed : props.theme.colors.primary.lightBlue};
     color:${props => props.color === "secondary" ? props.theme.colors.primary.semiBlack : props.theme.colors.primary.semiWhite};
     outline: none;
     border: none;

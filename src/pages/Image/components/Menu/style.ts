@@ -21,3 +21,5 @@ const MenuStyle = styled.div`
     padding: 8px;    
    }
 `;
+
+export default MenuStyle;

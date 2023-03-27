@@ -1,19 +1,25 @@
 import React from "react";
+
+import { Span } from "../../../../components/Typography";
 import HashtagsStyle from "./style";
 
-const Hashtags =() =>{
-    return(
+const Hashtags = () => {
+    const myHashtags = ["#Lorem", "#Lorem", "#Lorem", "#Lorem", "#Lorem"]
+    return (
         <HashtagsStyle>
             <div className="hashtags">
-                <span>#Lorem</span>
-                <span>#Lorem</span>
-                <span>#Lorem</span>
-                <span>#Lorem</span>
-                <span>#Lorem</span>
-                <span>#Lorem</span>
-                <span>#Lorem</span>
+                {myHashtags.map((item, index) =>
+                    <Span
+                        key={index}
+                        className="hashtagsTitle"
+                        weight={500}
+                        color="darkBlue"
+                    >
+                        {item}
+                    </Span>)
+                }
             </div>
-            </HashtagsStyle>
+        </HashtagsStyle>
     );
 }
 
