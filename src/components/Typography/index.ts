@@ -11,7 +11,7 @@ import styled, { DefaultTheme } from "styled-components";
     <Body3>HELLO WORLD</Body3>
 */
 
-type colors = "darkBlue" | "lightBlue" | "semiBlack" | "semiWhite" | "lightRed" | "white" | "black";
+type colors = "darkBlue" | "lightBlue" | "semiBlack" | "semiWhite" | "lightRed" | "white" | "black" | "skyBlue" | "skyBlueHover";
 
 interface IProps {
     color?: colors
@@ -28,6 +28,8 @@ const getColorsFromTheme = (color: colors, theme: DefaultTheme) => {
     if (color === "semiBlack") return theme.colors.primary.semiBlack
     if (color === "lightRed") return theme.colors.primary.lightRed
     if (color === "semiWhite") return theme.colors.primary.semiWhite
+    if(color === "skyBlue") return theme.colors.primary.skyBlue
+    if(color === "skyBlueHover") return theme.colors.primary.skyBlueHover
 
     if (color === "white") return theme.colors.shades.white
     if (color === "black") return theme.colors.shades.black
@@ -85,8 +87,8 @@ export const H3 = styled.h4<IProps>`
 
 export const H4 = styled.h4<IProps>`
     font-weight: ${props => props.weight ? props.weight : 600};
-    font-size: 2rem;
-    line-height: 2.5rem;
+    font-size: 1.75rem;
+    line-height: 1rem;
     ${props => Typography(props.theme, {
     color: props.color,
     align: props.align,
@@ -112,7 +114,7 @@ export const H5 = styled.h5<IProps>`
 export const Body1 = styled.p<IProps>`
     font-weight: ${props => props.weight ? props.weight : 400};
     font-size: 1rem;
-    line-height: 1.25rem;
+    line-height: 1.62rem;
     ${props => Typography(props.theme, {
     color: props.color,
     align: props.align,
