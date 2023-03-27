@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router';
+import Loading from '../components/Loading';
 // pages
 const Login = lazy(() => import("../pages/Login"));
 const Home = lazy(() => import("../pages/Home"));
@@ -22,39 +23,39 @@ const Router = () => {
     return (
         <Routes>
             <Route path={PATHS.LOGIN} element={
-                <Suspense fallback={<>loading</>}>
+                <Suspense fallback={<Loading />}>
                     <Login />
                 </Suspense>
             } />
             <Route path={PATHS.SIGN_UP} element={
-                <Suspense fallback={<>loading</>}>
+                <Suspense fallback={<Loading />}>
                     <Signup />
                 </Suspense>
             } />
 
             <Route path={PATHS.HOME} element={
-                <Suspense fallback={<>loading</>}>
+                <Suspense fallback={<Loading />}>
                     <Home />
                 </Suspense>
             } />
             <Route path={PATHS.FOLDER + "/:id"} element={
-                <Suspense fallback={<>loading</>}>
+                <Suspense fallback={<Loading />}>
                     <Folder />
                 </Suspense>
             } />
             <Route path={PATHS.IMAGE + "/:id"} element={
-                <Suspense fallback={<>loading</>}>
+                <Suspense fallback={<Loading />}>
                     <Image />
                 </Suspense>
             } />
             <Route path={PATHS.SETTINGS} element={
-                <Suspense fallback={<>loading</>}>
+                <Suspense fallback={<Loading />}>
                     <Settings />
                 </Suspense>
             } />
 
             <Route path={"*"} element={
-                <Suspense fallback={<>loading</>}>
+                <Suspense fallback={<Loading />}>
                     <NotFound />
                 </Suspense>
             } />
