@@ -1,16 +1,16 @@
 import React, { useState, useCallback } from 'react'
 import Style from './style'
 // components
-import { H4, H5 } from '../../components/Typography';
-// images
-import LoginLargeShape from '../../assets/LoginLargeShape.svg';
-import LoginSmallShape from '../../assets/LoginSmallShape.svg';
-import Input from '../../components/Input';
+import { H5 } from '../../components/Typography';
 import InputFiled from '../../components/InputFiled';
 import Button from '../../components/Button';
 import CustomLink from '../../components/CustomLink';
-import { PATHS } from '../../router';
 import CheckBox from '../../components/CheckBox';
+// images
+import LoginLargeShape from '../../assets/LoginLargeShape.svg';
+import LoginSmallShape from '../../assets/LoginSmallShape.svg';
+
+import { PATHS } from '../../router';
 
 // icons
 import { FaUser } from 'react-icons/fa';

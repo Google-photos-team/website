@@ -22,4 +22,4 @@ const MenuStyle = styled.div`
    }
 `;
 
-export default MenuStyle
+export default MenuStyle;
