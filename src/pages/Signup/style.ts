@@ -50,22 +50,23 @@ const Style = styled.div`
         }
     }
 
-    
     @media (max-width:1400px) {
         .form_container{
-            width: 60% !important;
+            width: 60%;
         }
     }
 
     @media (max-width:1200px) {
         .form_container{
-            width: 90% !important;
+            width: 90%;
+            padding: 30px;
         }
     }
 
     @media (max-width:920px) {
         .form_container{
-            width: calc(100% - 40px) !important;
+            width: calc(100% - 20px);
+            padding: 30px 20px;
         }
 
         .login_right_image{
