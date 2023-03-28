@@ -11,27 +11,27 @@ interface props {
   exitIcon: React.ReactNode,
 }
 
-const UpdateAvatarImage = ({ className, close, onClick, exitIcon }: props) => {
-  const [avatar, setAvatar] = useState("");
+const AddImage = ({ className, close, onClick, exitIcon }: props) => {
+  const [img, setImg] = useState("");
 
   const handelUpdate = () => {
-    // TODO: API CALL TO UPDATE PROFILE IMAGE
+    // TODO: API CALL TO ADD IMAGE
     close();
   }
 
   return (
     <Style className={className} onClick={onClick}>
       {exitIcon}
-      <Body1 weight={500} color="black">Update your avatar image</Body1>
+      <Body1 weight={500} color="black">upload new image</Body1>
       <ImageInput
-        onChange={(value) => { setAvatar(value) }} />
+        onChange={(value) => { setImg(value) }} />
       <Button
         margin='1rem 0 0'
         fullWidth
         onClick={handelUpdate}
-      >Update avatar</Button>
+      >Add Image</Button>
     </Style>
   )
 }
 
-export default UpdateAvatarImage
+export default AddImage

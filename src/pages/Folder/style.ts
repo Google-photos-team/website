@@ -6,12 +6,38 @@ const Style = styled.div`
   gap: 5%;
   flex-wrap: wrap;
 
+  --width: 30%;
+  --marginBottom: 30px;
+
+  .addImage{
+    width: var(--width);
+    position: relative;
+    background: #F4F4F4;
+    border-radius: 8px;
+    margin-bottom: var(--marginBottom);
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+    padding: 40px 20px;
+    align-self: stretch;
+  }
+
+  .addImage:hover{
+    background-color: #ddd;
+  }
+
+  .addImage img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
   .oneImage{
-    width: 30%;
+    width: var(--width);
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-bottom: 30px;
+    margin-bottom: var(--marginBottom);
   }
 
   .mainImage{
@@ -59,10 +85,11 @@ const Style = styled.div`
   @media (max-width: 1200px) {
     gap: 2%;
 
+    --width: 49%;
+    --marginBottom: 30px;
+
     .oneImage{
-      width: 49%;
       gap: 20px;
-      margin-bottom: 30px;
     }
 
     .mainImage{
@@ -78,9 +105,11 @@ const Style = styled.div`
   @media (max-width: 740px) {
     gap: 0;
 
-    .oneImage{
-      width: 100%;
-      margin-bottom: 30px;
+    --width: 100%;
+    --marginBottom: 30px;
+
+    .addImage{
+      aspect-ratio: 372/200;
     }
 
     .mainImage{
