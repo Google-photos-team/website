@@ -16,7 +16,7 @@ const Style = styled.div`
     justify-content: center;
     border-radius: 10px;
     cursor: pointer;
-    height: 400px !important;
+    aspect-ratio: 420/400;
 
     transition: 0.3s all ease-in-out;
     &:hover{

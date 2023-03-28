@@ -7,15 +7,41 @@ interface IProps {
     id: string,
     img: string,
     title: string,
-    tags: string[]
+    tags: string[],
+    select?:{
+        active: boolean,
+        selectedItems: string[]
+    },
+    setSelect?:(obj:{active?:boolean,selectedItems?:string[]}) => void
 }
 
-const ImageCard = ({ id, img, tags, title }: IProps) => {
+const ImageCard = ({ id, img, tags, title, select,setSelect }: IProps) => {
     return (
         <Style>
-            <CustomLink to={`/image/${id}`}>
-                <div className="mainImage">
+            <CustomLink to={select?.active?"":`/image/${id}`}>
+                <div className="mainImage"
+                     onClick={() => {
+                        if(select?.active && !select.selectedItems.find(x => x === id) && setSelect){
+                            setSelect({selectedItems:[id,...select.selectedItems]})
+                        }else if(select?.active && select.selectedItems.find(x => x === id) && setSelect){
+                            setSelect({selectedItems:[...select.selectedItems.filter(x => x !== id)]})
+                        }
+                    }}
+                >
                     <img src={img} alt="" />
+
+                    {
+                        select && select.active &&
+                        <label className="inputLabel" htmlFor={id} key={id}>
+                            <input
+                            name={title}
+                            type="checkbox"
+                            id={id}
+                            className={select.selectedItems.find(x => x === id) ? 'checked' : ''}
+                            value={select.selectedItems.find(x => x === id)}
+                            />
+                        </label>
+                    }
                 </div>
             </CustomLink>
             <CustomLink to={`/image/${id}`}>
