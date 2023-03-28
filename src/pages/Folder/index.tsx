@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Style from './style'
 import data from "../../mock/folder.json"
-import CustomLink from '../../components/CustomLink'
+import ImageCard from '../../components/ImageCard'
 import AddIcon from "../../assets/AddIcon.svg"
 import Modal from '../../components/Modal'
 import AddImage from '../../modals/AddImage'
@@ -25,26 +25,10 @@ const Folder = () => {
         <>
             <Operations data={data.map(item => ({id:item.id,name:item.title}))} select={select} setSelect={setSelect} />
             <Style className='containerWidth'>
-                <div className="addImage" onClick={() => setAddImageModal(true)}>
-                    <img src={AddIcon} alt="" />
+                <div className="add_button" onClick={() => {setAddImageModal(true)}}>
+                    <img src={AddIcon} alt="add" />
                 </div>
-                {data.map((item) =>(
-                    <div className="oneImage" key={item.id}>
-                        <CustomLink to={`/image/${item.id}`}>
-                            <div className="mainImage">
-                                <img src={item.img} alt="" />
-                            </div>
-                        </CustomLink>
-                        <CustomLink to={`/image/${item.id}`}>
-                            <div className="text">{item.title}</div>
-                        </CustomLink>
-                        <div className="tags">
-                            {item.tags.map((tag,index) =>(
-                                <div className="oneTag" key={index}>#{tag}</div>
-                            ))}
-                        </div>
-                    </div>
-                ))}
+                {data.map((item) => <ImageCard select={select} setSelect={setSelect} {...item} />)}
             </Style>
             <Modal
                 close={() => setAddImageModal(false)}

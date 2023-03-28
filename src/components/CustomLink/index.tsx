@@ -8,15 +8,24 @@ interface IProps {
     className?: ""
 }
 
-const Style = styled.span`
+
+interface spanProps{
+    noDirectChildrenStyle?: boolean,
+}
+
+const Style = styled.span<spanProps>`
     display: contents;
     color: inherit;
     text-decoration: none;
 
-    >*{
-        display: contents;
-        color: inherit;
-        text-decoration: none;
+    ${({noDirectChildrenStyle}) =>
+        noDirectChildrenStyle ?"": `
+        >*{
+            display: contents;
+            color: inherit;
+            text-decoration: none;
+        }
+        `
     }
 `
 const CustomLink = ({ to, children, className = "" }: IProps) => {
@@ -25,7 +34,7 @@ const CustomLink = ({ to, children, className = "" }: IProps) => {
         <Link to={to}>{children}</Link>
     </Style>
     :
-    <Style className={className}>
+    <Style className={className} noDirectChildrenStyle>
         {children}
     </Style>
 }

@@ -56,18 +56,7 @@ const Image: React.FC = () => {
                     </div>
                     <Hashtags />
                 </div>
-
-
-
-
-
-
-
-
-
-
             </div>
-
         </Styles>
     )
 }
