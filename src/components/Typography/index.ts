@@ -88,7 +88,7 @@ export const H3 = styled.h4<IProps>`
 export const H4 = styled.h4<IProps>`
     font-weight: ${props => props.weight ? props.weight : 600};
     font-size: 1.75rem;
-    line-height: 1rem;
+    line-height: 2rem;
     ${props => Typography(props.theme, {
     color: props.color,
     align: props.align,
