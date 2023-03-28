@@ -22,7 +22,7 @@ const UpdateAvatarImage = ({ className, close, onClick, exitIcon }: props) => {
   return (
     <Style className={className} onClick={onClick}>
       {exitIcon}
-      <Body1 weight={500} color="black">Update you avatar image</Body1>
+      <Body1 weight={500} color="black">Update your avatar image</Body1>
       <ImageInput
         onChange={(value) => { setAvatar(value) }} />
       <Button

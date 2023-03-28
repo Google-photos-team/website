@@ -1,10 +1,9 @@
 import React from "react";
-
-import { Span } from "../../../../components/Typography";
+import Tag from "../../../../components/Tag";
 import HashtagsStyle from "./style";
 
 const Hashtags = () => {
-    const myHashtags = ["#Lorem", "#Lorem", "#Lorem", "#Lorem", "#Lorem"]
+    const myHashtags = ["Lorem", "Lorem", "Lorem", "Lorem", "Lorem"]
     return (
         <div className="hashtags">
                 <HashtagsStyle>
@@ -15,7 +14,7 @@ const Hashtags = () => {
                         weight={500}
                         color="darkBlue"
                     >
-                        {item}
+                        #{item}
                     </Span>)
                 }
         </HashtagsStyle>
