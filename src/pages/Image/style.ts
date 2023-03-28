@@ -18,7 +18,6 @@ const Styles = styled.div`
     height: 100%;
     border-radius: 15px;
     padding: 5px;
-    margin-top: 100px;
   }
 
   .item-content {
@@ -27,7 +26,6 @@ const Styles = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-    margin: 5rem;
     position: relative;
   }
 
@@ -35,7 +33,8 @@ const Styles = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-top:2px;
+    cursor:pointer;
+    margin-bottom:20px;
   
   }
 
@@ -54,6 +53,14 @@ const Styles = styled.div`
     .item-content-detail p {
       width: 100%;
     }
+    .menu{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    cursor:pointer;
+    margin-bottom:30px;
+  }
+
   }
 
   @media screen and (max-width: 650px) {

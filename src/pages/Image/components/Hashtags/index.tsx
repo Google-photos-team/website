@@ -6,8 +6,8 @@ import HashtagsStyle from "./style";
 const Hashtags = () => {
     const myHashtags = ["#Lorem", "#Lorem", "#Lorem", "#Lorem", "#Lorem"]
     return (
-        <HashtagsStyle>
-            <div className="hashtags">
+        <div className="hashtags">
+                <HashtagsStyle>
                 {myHashtags.map((item, index) =>
                     <Span
                         key={index}
@@ -18,8 +18,8 @@ const Hashtags = () => {
                         {item}
                     </Span>)
                 }
-            </div>
         </HashtagsStyle>
+            </div>
     );
 }
 

@@ -8,27 +8,27 @@ import Menu from './components/Menu'
 
 const Image: React.FC = () => {
     const [openMenu, setOpenMenu] = useState(false)
-    const [closeMenu, setCloseMenu] = useState(false)
+    const [closeMenu, setCloseMenu] = useState(true)
 
 
 
     return (
         <Styles className='containerWidth' >
 
-            <div className="menu">
+            <div className="menu" >
                 <img src={menu} alt="menu"
                     onClick={() => {
                         setOpenMenu(true)
                         setCloseMenu(true)
                     }}
                 />
-                {openMenu === true ? <Menu /> : "" && closeMenu === true ? "" : ""}
+                {openMenu === true ?  <Menu /> : "" && closeMenu === true ? <Menu />: ""}
             </div>
 
             <div className='item section__padding'>
 
                 <div className="itemImage">
-                    <img src={imageForModal} alt="" />
+                    <img src={imageForModal} alt="Image For Modal" />
                 </div>
 
                 <div className="item-content">
@@ -37,7 +37,7 @@ const Image: React.FC = () => {
                             weight={600}
                             margin="16px 16px"
                             align="center"
-                            transform="uppercase"
+                            transform="capitalize"
                         >
                             Abstact Smoke Red Blue
                         </H4>
@@ -56,16 +56,6 @@ const Image: React.FC = () => {
                     </div>
                     <Hashtags />
                 </div>
-
-
-
-
-
-
-
-
-
-
             </div>
 
         </Styles>
