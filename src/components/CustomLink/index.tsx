@@ -20,8 +20,13 @@ const Style = styled.span`
     }
 `
 const CustomLink = ({ to, children, className = "" }: IProps) => {
-    return <Style className={className}>
+    return to?
+    <Style className={className}>
         <Link to={to}>{children}</Link>
+    </Style>
+    :
+    <Style className={className}>
+        {children}
     </Style>
 }
 

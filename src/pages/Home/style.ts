@@ -9,6 +9,12 @@ const Style = styled.div`
   flex-wrap: wrap;
   gap: calc(var(--calc));
 
+  user-select: none;
+
+  img{
+    pointer-events: none;
+  }
+
 
   .addFolder{
     width: var(--width);
@@ -46,6 +52,7 @@ const Style = styled.div`
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
+    position: relative;
   }
 
   .folder img{
@@ -64,6 +71,46 @@ const Style = styled.div`
     height: 50px;
     background-color: #fff;
   }
+
+  /* ----------------------------------- */
+  .inputLabel{
+    position: absolute;
+    right: 5px;
+    top: 10px;
+  }
+
+  .inputLabel input[type="checkbox"] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 25px;
+    height: 25px;
+    border-radius: 0.15em;
+    margin-right: 0.5em;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    background: transparent;
+    outline: none;
+    cursor: pointer;
+  }
+
+  /* .inputLabel input[type="checkbox"]:checked{ */
+  .checked{
+    position: relative;
+  }
+
+  /* .inputLabel input[type="checkbox"]:checked::before { */
+  .checked::before{
+    content: "\\2714";
+    font-size: 20px;
+    color: #FFA500;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%,-40%);
+  }
+  /* ----------------------------------- */
 
 
   @media (max-width: 1440px) {
