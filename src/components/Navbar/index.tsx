@@ -7,17 +7,17 @@ import { useLocation, useNavigate } from 'react-router'
 import { PATHS } from '../../router'
 
 const Navbar = () => {
-  const { search } = useLocation();
-  const [searchValue, setSearchValue] = useState(decodeURI(search.split("=")[1]));
+  const { search, pathname } = useLocation();
+  const [searchValue, setSearchValue] = useState(decodeURI(search.split("=")[1] ? "" : ""));
   const deferredValue = useDebounce(searchValue, 500);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
-    if (deferredValue) {
+    if (search && deferredValue) {
       navigate(PATHS.SEARCH + '?q=' + deferredValue);
     }
 
-    if(!search){
+    if (!search && pathname === PATHS.SEARCH) {
       setSearchValue("")
     }
   }, [deferredValue, navigate, search])

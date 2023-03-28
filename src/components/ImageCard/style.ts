@@ -10,7 +10,7 @@ const Style = styled.div`
     .mainImage{
       width: 100%;
       border-radius: 10px;
-      aspect-ratio: 1/1;
+      height: 400px;
       overflow: hidden;
     }
 

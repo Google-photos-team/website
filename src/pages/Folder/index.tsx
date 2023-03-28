@@ -10,6 +10,9 @@ const Folder = () => {
     return (
         <>
             <Style className='containerWidth'>
+                <div className="add_button" onClick={() => {setAddImageModal(true)}}>
+                    <img src={AddIcon} alt="add" />
+                </div>
                 {data.map((item) => <ImageCard {...item} />)}
             </Style>
             <Modal
