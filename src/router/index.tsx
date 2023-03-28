@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router';
 import Loading from '../components/Loading';
+import Search from '../pages/Search';
 // pages
 const Login = lazy(() => import("../pages/Login"));
 const Home = lazy(() => import("../pages/Home"));
@@ -17,6 +18,7 @@ export const PATHS = {
     IMAGE: "/image",
     SETTINGS: "/settings",
     SIGN_UP: "/signup",
+    SEARCH: "search"
 }
 
 const Router = () => {
@@ -41,6 +43,11 @@ const Router = () => {
             <Route path={PATHS.FOLDER + "/:id"} element={
                 <Suspense fallback={<Loading />}>
                     <Folder />
+                </Suspense>
+            } />
+            <Route path={PATHS.SEARCH} element={
+                <Suspense fallback={<Loading />}>
+                    <Search />
                 </Suspense>
             } />
             <Route path={PATHS.IMAGE + "/:id"} element={

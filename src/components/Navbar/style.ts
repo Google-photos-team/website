@@ -23,6 +23,9 @@ const Style = styled.div`
     color: #F4F4F4;
   }
 
+  .search{
+    width: 70%;
+  }
   .user{
     display: flex;
     align-items: center;
