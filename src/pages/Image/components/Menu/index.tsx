@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Modal from "../../../../components/Modal";
-import { H5 } from "../../../../components/Typography";
 import DeleteImage from "../../../../modals/DeleteImageModal";
 import MoveImage from '../../../../modals/MoveImageModal'
 import MenuStyle from "./style";
