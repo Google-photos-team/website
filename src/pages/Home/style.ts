@@ -28,7 +28,7 @@ const Style = styled.div`
   }
 
   .addFolder:hover{
-    background-color: #ddd;
+    background-color: ${props => props.theme.colors.primary.gray};
   }
 
   .addFolder img{
@@ -60,7 +60,7 @@ const Style = styled.div`
   }
 
   .folder:hover{
-    background-color: #ddd;
+    background-color:${props=>props.theme.colors.primary.lightGrey};
   }
 
   .test{
@@ -88,7 +88,7 @@ const Style = styled.div`
     height: 25px;
     border-radius: 0.15em;
     margin-right: 0.5em;
-    border: 1px solid #000000;
+    border: 1px solid ${props=>props.theme.colors.shades.black};
     border-radius: 6px;
     background: transparent;
     outline: none;

@@ -13,7 +13,7 @@ const Style = styled.div`
     margin-top: 12px;
 
     border: none;
-    background: #09A7BC;
+    background: ${props => props.theme.colors.primary.skyBlue};
     border-radius: 8px;
     height: 40px;
     cursor: pointer;

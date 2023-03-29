@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const Styles = styled.div`
+  position: relative;
+
   .item {
     display: flex;
     padding: 0 2rem;
@@ -30,12 +32,16 @@ const Styles = styled.div`
   }
 
   .menu{
+    position: absolute;
+    top: 14px;
+    right: 0;
+    width: 28px;
+    height: 28px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-    cursor:pointer;
-    margin-bottom:20px;
-  
+    cursor: pointer;
+    user-select: none;
   }
 
 
