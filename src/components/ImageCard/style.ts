@@ -49,7 +49,7 @@ const Style = styled.div`
       height: 25px;
       border-radius: 0.15em;
       margin-right: 0.5em;
-      border: 1px solid #000000;
+      border: 1px solid ${props=> props.theme.colors.shades.black};
       border-radius: 6px;
       background: transparent;
       outline: none;
@@ -65,7 +65,7 @@ const Style = styled.div`
     .checked::before{
       content: "\\2714";
       font-size: 20px;
-      color: #FFA500;
+      color: ${props => props.theme.colors.primary.orange};
       position: absolute;
       left: 50%;
       top: 40%;

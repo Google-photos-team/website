@@ -30,7 +30,7 @@ const Select = styled.select<IProps>`
 
     option:hover{
     background-color:  ${props => props.theme.colors.primary.gray} !important;
-    color: #fff;
+    color: ${props =>props.theme.colors.shades.white};
   }
 `;
 

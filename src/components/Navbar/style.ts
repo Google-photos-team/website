@@ -12,7 +12,7 @@ const Style = styled.div`
   align-items: center;
 
   padding: 22px 30px;
-  background: #1A1A1A;
+  background: ${props => props.theme.colors.primary.semiBlack};
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.08);
 
   .path{
@@ -20,7 +20,7 @@ const Style = styled.div`
     font-weight: 500;
     font-size: 20px;
     line-height: 18px;
-    color: #F4F4F4;
+    color: ${props => props.theme.colors.primary.semiWhite};
   }
 
   .search{
@@ -51,7 +51,7 @@ const Style = styled.div`
     font-weight: 600;
     font-size: 16px;
     line-height: 18px;
-    color: #F4F4F4;
+    color: ${props => props.theme.colors.primary.semiWhite};
   }
 
 

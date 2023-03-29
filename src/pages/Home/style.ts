@@ -19,7 +19,7 @@ const Style = styled.div`
   .addFolder{
     width: var(--width);
     position: relative;
-    background: #F4F4F4;
+    background: ${props => props.theme.colors.primary.semiWhite};
     border-radius: 8px;
     margin-bottom: var(--marginBottom);
     transition: all 0.5s ease-in-out;
@@ -69,7 +69,7 @@ const Style = styled.div`
     left: 50%;
     width: 50%;
     height: 50px;
-    background-color: #fff;
+    background-color: ${props=>props.theme.colors.shades.white};
   }
 
   /* ----------------------------------- */
@@ -104,7 +104,7 @@ const Style = styled.div`
   .checked::before{
     content: "\\2714";
     font-size: 20px;
-    color: #FFA500;
+    color: ${props => props.theme.colors.primary.orange};
     position: absolute;
     left: 50%;
     top: 40%;
