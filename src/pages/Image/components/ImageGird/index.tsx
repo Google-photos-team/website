@@ -1,6 +1,6 @@
 import React from "react";
 import '../../../../styles/ImagePage/styles'
-import { ItemImage } from "./style";
+import ItemImage from "./style";
 
 const ImageGird = () => {
 
