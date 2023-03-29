@@ -38,7 +38,7 @@ const Navbar = () => {
       <div className="user">
         <div className="icon" onClick={() => setOpenMenu(prev => !prev)} onBlur={() => setOpenMenu(false)} tabIndex={0}>
           <img src={Avatar} alt="" />
-          {openMenu && <Menu className='dropMenuNav' typeOne='Signup' typeTwo='Settings' setOpenMenu={setOpenMenu} />}
+          {openMenu && <Menu className='dropMenuNav' typeOne='Logout' typeTwo='Settings' setOpenMenu={setOpenMenu} />}
         </div>
 
         <div className="name">
