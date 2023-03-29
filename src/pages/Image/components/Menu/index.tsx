@@ -11,8 +11,8 @@ const Menu = () => {
         <MenuStyle>
             <div className="menu">
 
-                <ul className="menuTypes">
-                    <div onClick={() => setMoveModal(true)}>
+                <ul className="menuTypes" tabIndex={0}>
+                    <div onClick={() => setMoveModal(true)} >
                         <li className="move">Move</li>
                     </div>
                     <div onClick={() => setdeleteModal(true)}>
