@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {useCallback} from "react"
+import "./i18n/config"
+import { useTranslation } from 'react-i18next';
+import { ThemeProvider } from "styled-components";
+import GlobalStyle from "./styles/globalStyle";
+import { Theme } from "./styles/theme";
+// Router
+import Router from "./router";
+import Navbar from "./components/Navbar";
+import { useLocation } from "react-router";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { t, i18n } = useTranslation();
+
+  const changeLanguageHandler = () => {
+    i18n.changeLanguage(i18n.language === "ar" ? "en" : "ar")
+  }
+
+  const {pathname} = useLocation();
+
+
+  const checkForLoginOrSignUp = useCallback(
+    () =>{
+      console.log(pathname)
+      if(pathname.toLocaleLowerCase() === "/login" || pathname.toLocaleLowerCase() === "/signup"){
+        return true
+      }
+  
+      return false;
+    },
+    [pathname]
+  )
+  
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <ThemeProvider theme={Theme}>
+      {checkForLoginOrSignUp() || <Navbar />}
+      <GlobalStyle noPadding={checkForLoginOrSignUp()} />
+      <Router />
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
