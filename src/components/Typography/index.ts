@@ -11,7 +11,7 @@ import styled, { DefaultTheme } from "styled-components";
     <Body3>HELLO WORLD</Body3>
 */
 
-type colors = "darkBlue" | "lightBlue" | "semiBlack" | "semiWhite" | "lightRed" | "white" | "black" | "skyBlue" | "skyBlueHover";
+type colors = "darkBlue" | "lightBlue" | "semiBlack" | "semiWhite" | "lightRed" | "white" | "black" | "skyBlue" | "skyBlueHover" | "orange" | "lightGrey";
 
 interface IProps {
     color?: colors
@@ -30,6 +30,9 @@ const getColorsFromTheme = (color: colors, theme: DefaultTheme) => {
     if (color === "semiWhite") return theme.colors.primary.semiWhite
     if(color === "skyBlue") return theme.colors.primary.skyBlue
     if(color === "skyBlueHover") return theme.colors.primary.skyBlueHover
+    if(color === "orange") return theme.colors.primary.orange
+    if(color === "lightGrey") return theme.colors.primary.lightGrey
+
 
     if (color === "white") return theme.colors.shades.white
     if (color === "black") return theme.colors.shades.black
