@@ -10,7 +10,9 @@ export const Theme: DefaultTheme = {
       gray:"#CCC",
       lightRed:"#FF3333",
       skyBlue:"#09A7BC",
-      skyBlueHover:"#62DDED"
+      skyBlueHover:"#62DDED",
+      orange:"#FFA500",
+      lightGrey : "#DEE2E6"
     },
     shades:{
       white:"#FFFFFF",
