@@ -24,40 +24,10 @@ const Menu = ({ className, typeOne, typeTwo, setOpenMenu }: props) => {
         <MenuStyle onClick={(e) => e.stopPropagation()}>
             <div className={className}>
                 <ul className="menuTypes">
-
-                    {/* {typeOne === "signup" 
-                        ?
-                        <CustomLink to={PATHS.SIGN_UP}>
-                            <li className="move">{typeOne}</li>
-                        </CustomLink> 
-                        : 
-                        <li className="move">{typeOne}</li>
-                        } */}
-                        <CustomLink to={PATHS.SIGN_UP}>
-                            <li className="signup">{typeOne}</li>
-                        </CustomLink> 
-                        <CustomLink to={PATHS.SETTINGS}>
-                            <li className="settings">{typeTwo}</li>
-                        </CustomLink>
-
-                    <div onClick={() => {
-                        setMoveModal(true);
-                    }} >
-                        {/* {typeOne === "signup" 
-                        ?
-                        <CustomLink to={PATHS.SIGN_UP}>
-                            <li className="move">{typeOne}</li>
-                        </CustomLink> 
-                        : 
-                        <li className="move">{typeOne}</li>} */}
-
-                        <li className="move">{typeOne}</li>
-                    </div>
-                    <div onClick={() => {
-                        setdeleteModal(true);
-                    }}>
-                        <li className="delete">{typeTwo}</li>
-                    </div>
+                    <li className="signup">{typeOne}</li>
+                    <CustomLink to={PATHS.SETTINGS}>
+                        <li className="settings">{typeTwo}</li>
+                    </CustomLink>
                 </ul>
 
 
