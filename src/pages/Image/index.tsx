@@ -8,21 +8,15 @@ import Menu from './components/Menu'
 
 const Image: React.FC = () => {
     const [openMenu, setOpenMenu] = useState(false)
-    const [closeMenu, setCloseMenu] = useState(true)
 
 
 
     return (
         <Styles className='containerWidth' >
 
-            <div className="menu" >
-                <img src={menu} alt="menu"
-                    onClick={() => {
-                        setOpenMenu(true)
-                        setCloseMenu(true)
-                    }}
-                />
-                {openMenu === true ?  <Menu /> : "" && closeMenu === true ? <Menu />: ""}
+            <div className="menu" onClick={() => setOpenMenu(prev => !prev)} onBlur={() => setOpenMenu(false)} tabIndex={0}>
+                <img src={menu} alt="menu" />
+                {openMenu && <Menu setOpenMenu={setOpenMenu} />}
             </div>
 
             <div className='item section__padding'>

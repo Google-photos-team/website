@@ -31,7 +31,7 @@ const Style = styled.div`
         max-width: 1000px;
         background-color: ${props => props.theme.colors.shades.white};
         border-radius: 1.5rem;
-        box-shadow: 0 0 10px 0 #CCC;
+        box-shadow: 0 0 10px 0 ${props => props.theme.colors.primary.gray};
         padding: 50px;
     }
 

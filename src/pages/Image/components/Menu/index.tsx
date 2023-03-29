@@ -4,18 +4,26 @@ import DeleteImage from "../../../../modals/DeleteImageModal";
 import MoveImage from '../../../../modals/MoveImageModal'
 import MenuStyle from "./style";
 
-const Menu = () => {
+interface props{
+    setOpenMenu: (value:boolean) => void
+}
+
+const Menu = ({setOpenMenu}:props) => {
     const [moveModal, setMoveModal] = useState(false);
     const [deleteModal, setdeleteModal] = useState(false);
     return (
-        <MenuStyle>
-            <div className="menu">
+        <MenuStyle onClick={(e) => e.stopPropagation()}>
+            <div className="dropMenu">
 
-                <ul className="menuTypes" tabIndex={0}>
-                    <div onClick={() => setMoveModal(true)} >
+                <ul className="menuTypes">
+                    <div onClick={() => {
+                        setMoveModal(true);
+                    }} >
                         <li className="move">Move</li>
                     </div>
-                    <div onClick={() => setdeleteModal(true)}>
+                    <div onClick={() => {
+                        setdeleteModal(true);
+                    }}>
                         <li className="delete">Delete</li>
                     </div>
                 </ul>
