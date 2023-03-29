@@ -3,8 +3,8 @@ import styled from "styled-components";
 const MenuStyle = styled.div`
   position: absolute;
   overflow: hidden;
-  top: 100%;
-  right: 50%;
+  top: 80%;
+  right: 9%;
   background-color: ${(props) => props.theme.colors.primary.skyBlue};
   box-shadow: 0px 6px 8px rgba(25, 50, 47, 0.08),
     0px 3px 4px rgba(18, 71, 52, 0.02), 0px 1px 16px rgba(18, 71, 52, 0.03);

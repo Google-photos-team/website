@@ -16,7 +16,7 @@ const Image: React.FC = () => {
 
             <div className="menu" onClick={() => setOpenMenu(prev => !prev)} onBlur={() => setOpenMenu(false)} tabIndex={0}>
                 <img src={menu} alt="menu" />
-                {openMenu && <Menu setOpenMenu={setOpenMenu} />}
+                {openMenu && <Menu className='dropMenu' typeOne='MOVE' typeTwo='DELETE' setOpenMenu={setOpenMenu} />}
             </div>
 
             <div className='item section__padding'>
