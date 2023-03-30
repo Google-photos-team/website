@@ -5,7 +5,7 @@ import Input from '../Input'
 import useDebounce from '../../hooks/useDebounce'
 import { useLocation, useNavigate } from 'react-router'
 import { PATHS } from '../../router'
-import Menu from '../../pages/Image/components/Menu'
+import Menu from '../../components/Navbar/components/Menu'
 
 const Navbar = () => {
   const { search, pathname } = useLocation();
