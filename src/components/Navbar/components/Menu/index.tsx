@@ -24,9 +24,6 @@ const Menu = ({ className, typeOne, typeTwo, setOpenMenu }: props) => {
                     </CustomLink>
                 </ul>
             </div>
-
-
-
         </MenuStyle>
 
     );
