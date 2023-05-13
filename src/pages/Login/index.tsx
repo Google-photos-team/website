@@ -15,12 +15,33 @@ import { PATHS } from '../../router';
 // icons
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
+import axios from 'axios';
+
 const Login = () => {
     const [data, setData] = useState({
         username: { value: "", error: "" },
         password: { value: "", error: "" },
     });
-
+    
+    
+    const handlerSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+        e.preventDefault()
+        console.log("first")
+        axios
+        .post('https://image-project.onrender.com/auth/login', {
+                username: data.username,
+                password: data.password
+              })
+        .then( (response) => {
+            console.log(response)
+            console.log("response")
+        })
+        .catch( (error) => {
+            console.log(error.message)
+            console.log("error")
+        });
+      };
+    
     const [isRememberMeOn, setIsRememberMeOn] = useState(false);
 
     const handelInputsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +84,8 @@ const Login = () => {
                         onChange={() => setIsRememberMeOn(prev => !prev)}
                         value={isRememberMeOn}
                         label="Remember Me" />
-
+                        <input type="button" value="submit" title='submit' onClick={handlerSubmit} />
+                       
                     <Button fullWidth margin='0.7rem 0'>Login</Button>
                 </form>
                 <CustomLink to={PATHS.SIGN_UP}>Don't have an account?</CustomLink>
