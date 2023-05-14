@@ -8,20 +8,24 @@ interface props{
     close: () => void,
     className:string,
     onClick:(e:any)=> void,
-    exitIcon: React.ReactNode
+    exitIcon: React.ReactNode,
+    handleAction?: (data:any) => void,
   }) => JSX.Element,
   isOpen: boolean,
   close: () => void,
+  handleAction?: (data:any) => void,
 }
 
-const Modal = ({Content,close,isOpen}:props) => {
+const Modal = ({Content,close,isOpen,handleAction}:props) => {
   return !isOpen? <></> : createPortal((
     <Style onClick={() => close()}>
         <Content className='modalContent' close={close} onClick={(e) => e.stopPropagation()} exitIcon={(
-          <div className='exitIcon' onClick={() => close()}>
-            <img src={ExitIcon} alt="" />
-          </div>
-        )} />
+            <div className='exitIcon' onClick={() => close()}>
+              <img src={ExitIcon} alt="" />
+            </div>
+          )} 
+          handleAction={handleAction}
+        />
     </Style>
   ),document.getElementById("modal_portal") as Element)
 }
