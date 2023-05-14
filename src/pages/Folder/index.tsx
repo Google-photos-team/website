@@ -25,7 +25,9 @@ const Folder = () => {
     });
 
     useEffect(() => {
-        id?getFolderById({id,setState:setData}):"";
+        if(id){
+            getFolderById({id}).then((images) => setData(images))
+        }
       return () => {}
     }, [])
     
