@@ -15,12 +15,13 @@ interface props{
 const AddFolder = ({className,close,onClick,exitIcon,handleAction}:props) => {
   const [text,setText] = useState("");
   
-  const handleClick = (e:any) =>{
+  const handleClick = async () =>{
 
     if(text.length > 0){
-      createFolder({name:text,handleAction});
+      await createFolder({name:text}).then((data) => handleAction && handleAction({id:data._id,name:data.name}));
     }
-    onClick(e);
+
+    close();
   }
 
   const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +30,7 @@ const AddFolder = ({className,close,onClick,exitIcon,handleAction}:props) => {
 
 
   return (
-    <Style className={className} onClick={handleClick}>
+    <Style className={className} onClick={onClick}>
       {exitIcon}
       <H5 weight={400} color="black">Folder Name</H5>
       <InputFiled
@@ -40,7 +41,7 @@ const AddFolder = ({className,close,onClick,exitIcon,handleAction}:props) => {
         fullWidth
         placeholder='name' />
 
-        <button className="createButton" onClick={() => close()}>
+        <button className="createButton" onClick={() => handleClick()}>
           <Body1 weight={700} color="semiWhite">Create</Body1>
         </button>
     </Style>

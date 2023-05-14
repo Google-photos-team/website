@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { authorizationHeader, defaults } from "../api/config/config";
-import { getProfile } from "../api/ProfileApi";
+import { getProfile } from "../api/ProfileAPI";
 
 interface AuthContextProps{
   login:()=>void;
@@ -41,8 +41,12 @@ function useAuthProvider(){
     console.log("Logout")
   }
 
-  const token = () => {
-    getProfile({setState:setUser});
+  const token = async () => {
+    const data = await getProfile();
+    setUser({
+      username:data.username,
+      avatar:data.avatar
+    });
   }
 
   useEffect(() => {

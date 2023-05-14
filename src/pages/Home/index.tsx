@@ -25,12 +25,14 @@ const Home = () => {
     const setSelect = (obj:{active?:boolean,selectedItems?:string[]}) => setSelects(prev => ({...prev,...obj}))
 
     useEffect(() => {
-        getFolders({setState:setData});
+        getFolders().then((folders) => setData(folders))
       return () => {}
     }, [])
 
-    const handleDelete = () => {
-        deleteFolders({ids:select.selectedItems,handleAction:() => setData(prev => [...prev.filter(item => !select.selectedItems.find(x => x === item._id))])})
+    const handleDelete = async () => {
+        await deleteFolders({ids:select.selectedItems}).then(() => {
+            setData(prev => [...prev.filter(item => !select.selectedItems.find(x => x === item._id))])
+        })
         setSelect({active:false,selectedItems:[]})
     }
     
