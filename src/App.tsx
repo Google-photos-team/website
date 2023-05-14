@@ -8,6 +8,9 @@ import { Theme } from "./styles/theme";
 import Router from "./router";
 import Navbar from "./components/Navbar";
 import { useLocation } from "react-router";
+import { useCookies } from "react-cookie";
+import { AuthProvider } from "./contexts/authContext";
+
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -21,7 +24,7 @@ function App() {
 
   const checkForLoginOrSignUp = useCallback(
     () =>{
-      console.log(pathname)
+      // console.log(pathname)
       if(pathname.toLocaleLowerCase() === "/login" || pathname.toLocaleLowerCase() === "/signup"){
         return true
       }
@@ -33,11 +36,13 @@ function App() {
   
 
   return (
-    <ThemeProvider theme={Theme}>
-      {checkForLoginOrSignUp() || <Navbar />}
-      <GlobalStyle noPadding={checkForLoginOrSignUp()} />
-      <Router />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={Theme}>
+        {checkForLoginOrSignUp() || <Navbar />}
+        <GlobalStyle noPadding={checkForLoginOrSignUp()} />
+        <Router />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

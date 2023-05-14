@@ -25,6 +25,7 @@ const Style = styled.div`
     transition: all 0.5s ease-in-out;
     cursor: pointer;
     padding: 40px 20px;
+    min-height: 250px;
   }
 
   .addFolder:hover{
