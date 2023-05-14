@@ -12,11 +12,12 @@ interface props{
     selectedItems: string[]
   },
   setSelect: (obj:{active?:boolean,selectedItems?:string[]}) => void,
-  data: {id:string,name:string}[],
-  hideDelete?: boolean
+  data: {_id:string}[],
+  hideMove?: boolean,
+  handleDelete?: () => void
 }
 
-const Operations = ({select,setSelect,data,hideDelete}:props) => {
+const Operations = ({select,setSelect,data,hideMove,handleDelete}:props) => {
   return (
     <Style className='containerWidth'>
       <div className="selectBlock hoverClass" 
@@ -33,20 +34,23 @@ const Operations = ({select,setSelect,data,hideDelete}:props) => {
 
       {select.active &&
       <>
-          {hideDelete ||
-            <div className={`iconsClass ${select.selectedItems.length > 0?"hoverClass":"disabledClass"}`}>
-                <img className='selectIcon' src={Trash} alt="" />
-            </div>
-          }
-
-          <div className={`iconsClass ${select.selectedItems.length > 0?"hoverClass":"disabledClass"}`}>
-              <img className='selectIcon' src={Move} alt="" />
+          <div className={`iconsClass ${select.selectedItems.length > 0?"hoverClass":"disabledClass"}`} onClick={() =>{
+              if(select.selectedItems.length > 0){
+                  handleDelete ? handleDelete() : ""
+              }
+          }}>
+              <img className='selectIcon' src={Trash} alt="" />
           </div>
+
+          {hideMove ||
+            <div className={`iconsClass ${select.selectedItems.length > 0?"hoverClass":"disabledClass"}`}>
+              <img className='selectIcon' src={Move} alt="" />
+          </div>}
 
           <Body1 className='selectAll hoverClass'
               onClick={() => {
                   if(select.selectedItems.length !== data.length ){
-                      setSelect({selectedItems:[...data.map(item => item.id)]})
+                      setSelect({selectedItems:[...data.map(item => item._id)]})
                   }else{
                       setSelect({selectedItems:[]})
                   }

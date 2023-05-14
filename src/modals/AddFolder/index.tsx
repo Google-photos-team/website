@@ -2,19 +2,24 @@ import React,{useState} from 'react'
 import InputFiled from '../../components/InputFiled';
 import { Body1, H5 } from '../../components/Typography';
 import Style from './style'
+import { createFolder } from '../../api/FoldersAPI';
 
 interface props{
   className: string,
   close: () => void,
   onClick:(e:any)=> void,
   exitIcon: React.ReactNode,
+  handleAction?: (data:any) => void,
 }
 
-const AddFolder = ({className,close,onClick,exitIcon}:props) => {
+const AddFolder = ({className,close,onClick,exitIcon,handleAction}:props) => {
   const [text,setText] = useState("");
   
   const handleClick = (e:any) =>{
 
+    if(text.length > 0){
+      createFolder({name:text,handleAction});
+    }
     onClick(e);
   }
 
