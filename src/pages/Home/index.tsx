@@ -1,42 +1,67 @@
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 import Style from './style'
-import data from "../../mock/folders.json"
 import FolderImg from "../../assets/FolderImg.svg"
 import AddIcon from "../../assets/AddIcon.svg"
-import Modal from '../../components/Modal'
+import ModalV2 from '../../components/ModalV2'
 import AddFolder from '../../modals/AddFolder'
 import CustomLink from '../../components/CustomLink'
 import Operations from '../../components/Operations'
+import { deleteFolders, getFolders } from '../../api/FoldersAPI'
+import { toast } from 'react-toastify'
+import Loading from '../../components/Loading'
 
-interface stateProps{
+interface stateProps {
     active: boolean,
     selectedItems: string[]
 }
 
 const Home = () => {
-    const [addFileModal,setAddFileModal] = useState(false);
+    const [data, setData] = useState<{ _id: string, name: string }[]>([]);
+    const [addFileModal, setAddFileModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [select,setSelects] = useState<stateProps>({
+    const [select, setSelects] = useState<stateProps>({
         active: false,
-        selectedItems:[],
+        selectedItems: [],
     });
 
-    const setSelect = (obj:{active?:boolean,selectedItems?:string[]}) => setSelects(prev => ({...prev,...obj}))
+    const setSelect = (obj: { active?: boolean, selectedItems?: string[] }) => setSelects(prev => ({ ...prev, ...obj }))
+
+    useEffect(() => {
+        setIsLoading(true);
+        getFolders().then((folders) => {
+            setData(folders);
+        }).catch((error) => {
+            toast.error(error.message as string)
+        }).finally(() => {
+            setIsLoading(false);
+        });
+    }, [])
+
+    const handleDelete = () => {
+        deleteFolders({ ids: select.selectedItems, handleAction: () => setData(prev => [...prev.filter(item => !select.selectedItems.find(x => x === item._id))]) })
+        setSelect({ active: false, selectedItems: [] })
+    }
+
+    if (isLoading) {
+        return <Loading />
+    }
+    
     return (
         <>
-            <Operations data={data} select={select} setSelect={setSelect} hideDelete />
+            <Operations data={data} select={select} setSelect={setSelect} handleDelete={handleDelete} hideMove />
             <Style className='containerWidth'>
                 <div className="addFolder" onClick={() => setAddFileModal(true)}>
                     <img src={AddIcon} alt="" />
                 </div>
                 {data.map(item => (
-                    <CustomLink key={item.id} to={select.active?"":`/folder/${item.id}`}>
+                    <CustomLink key={item._id} to={select.active ? "" : `/folder/${item._id}`}>
                         <div className="folder"
                             onClick={() => {
-                                if(select.active && !select.selectedItems.find(x => x === item.id)){
-                                    setSelect({selectedItems:[item.id,...select.selectedItems]})
-                                }else if(select.active && select.selectedItems.find(x => x === item.id)){
-                                    setSelect({selectedItems:[...select.selectedItems.filter(x => x !== item.id)]})
+                                if (select.active && !select.selectedItems.find(x => x === item._id)) {
+                                    setSelect({ selectedItems: [item._id, ...select.selectedItems] })
+                                } else if (select.active && select.selectedItems.find(x => x === item._id)) {
+                                    setSelect({ selectedItems: [...select.selectedItems.filter(x => x !== item._id)] })
                                 }
                             }}
                         >
@@ -45,13 +70,13 @@ const Home = () => {
 
                             {
                                 select.active &&
-                                <label className="inputLabel" htmlFor={item.id} key={item.id}>
+                                <label className="inputLabel" htmlFor={item._id} key={item._id}>
                                     <input
-                                    name={item.name}
-                                    type="checkbox"
-                                    id={item.id}
-                                    className={select.selectedItems.find(x => x === item.id) ? 'checked' : ''}
-                                    value={select.selectedItems.find(x => x === item.id)}
+                                        name={item.name}
+                                        type="checkbox"
+                                        id={item._id}
+                                        className={select.selectedItems.find(x => x === item._id) ? 'checked' : ''}
+                                        value={select.selectedItems.find(x => x === item._id)}
                                     />
                                 </label>
                             }
@@ -59,11 +84,12 @@ const Home = () => {
                     </CustomLink>
                 ))}
             </Style>
-            <Modal
-                close={() => setAddFileModal(false)}
-                isOpen={addFileModal}
-                Content={AddFolder}
-            />
+            {addFileModal && <ModalV2 close={() => setAddFileModal(false)}>
+                <AddFolder
+                    close={() => setAddFileModal(false)}
+                    addFolder={({ _id, name }) => setData(prev => [...prev, { _id, name }])}
+                />
+            </ModalV2>}
         </>
     )
 }

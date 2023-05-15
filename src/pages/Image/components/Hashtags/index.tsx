@@ -3,12 +3,14 @@ import Tag from "../../../../components/Tag";
 import { Span } from "../../../../components/Typography";
 import HashtagsStyle from "./style";
 
-const Hashtags = () => {
-    const myHashtags = ["Lorem", "Lorem", "Lorem", "Lorem", "Lorem"]
+interface IProps {
+    tags: string[]
+}
+const Hashtags = ({ tags }: IProps) => {
     return (
         <div className="hashtags">
-                <HashtagsStyle>
-                {myHashtags.map((item, index) =>
+            <HashtagsStyle>
+                {tags.map((item, index) =>
                     <Span
                         key={index}
                         className="hashtagsTitle"
@@ -18,8 +20,8 @@ const Hashtags = () => {
                         #{item}
                     </Span>)
                 }
-        </HashtagsStyle>
-            </div>
+            </HashtagsStyle>
+        </div>
     );
 }
 

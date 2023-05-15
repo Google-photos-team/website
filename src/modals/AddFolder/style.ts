@@ -1,13 +1,8 @@
 import styled from "styled-components";
 
 const Style = styled.div`
-  width: clamp(500px,40%,800px);
-
   display: flex;
   flex-direction: column;
-
-  padding: 28px 38px 20px;
-
 
   .createButton{
     margin-top: 12px;
