@@ -15,7 +15,17 @@ import CheckBox from '../../components/CheckBox';
 // icons
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
+
+//axios api
+import axios from 'axios';
+
+//hooks useNavigate
+import { useNavigate } from 'react-router';
+//useAuth context
+import { useAuth } from '../../contexts/authContext';
 const Signup = () => {
+    const navigate = useNavigate()
+    const {setToken}= useAuth()
     const [data, setData] = useState({
         username: { value: "", error: "" },
         password: { value: "", error: "" },
@@ -28,6 +38,24 @@ const Signup = () => {
         setData(prev => ({ ...prev, [e.target.name]: { value: e.target.value, error: "" } }))
     }, [setData])
 
+    const handlerSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        axios
+        .post('https://image-project.onrender.com/auth/signup', {
+                username: data.username.value,
+                password: data.password.value,
+                passwordConfirm: data.passwordConfirm.value
+              })
+        .then( (response) => {
+            navigate(PATHS.HOME)
+            setToken(response.data.data.token,acceptTerms)
+        })
+        .catch( (error) => {
+            console.log(error.message)
+        });
+      };
+    
+
     return (
         <Style>
             <img src={LoginLargeShape} alt="login page" className='login_left_image' />
@@ -35,7 +63,7 @@ const Signup = () => {
 
             <div className="form_container">
                 <H5 margin='0 0 20px' weight={700} transform="capitalize">login Into your Account</H5>
-                <form>
+                <form onSubmit={handlerSubmit}>
                     <div className="input_group">
                         <FaUser className='input_group_icon' />
                         <InputFiled
@@ -77,7 +105,7 @@ const Signup = () => {
                         value={acceptTerms}
                         label="Accept terms and conditions" />
 
-                    <Button fullWidth margin='0.7rem 0'>Login</Button>
+                    <Button fullWidth margin='0.7rem 0' onClick={(e)=>handlerSubmit}>Login</Button>
                 </form>
                 <CustomLink to={PATHS.LOGIN}>Already have an account?</CustomLink>
             </div>
