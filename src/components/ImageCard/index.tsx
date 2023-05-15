@@ -4,27 +4,28 @@ import { H5 } from '../Typography'
 import Style from './style'
 
 interface IProps {
-    _id: string;
-    name: string;
-    image: string;
-    tags: string[];
-    select?:{
+    _id: string,
+    name: string, // image_name
+    image: string, // base64 image
+    tags: string[],
+    select?: {
         active: boolean,
         selectedItems: string[]
     },
-    setSelect?:(obj:{active?:boolean,selectedItems?:string[]}) => void
+    setSelect?: (obj: { active?: boolean, selectedItems?: string[] }) => void
 }
 
-const ImageCard = ({ _id, image, tags, name, select,setSelect }: IProps) => {
+
+const ImageCard = ({ _id, name, image, tags, select, setSelect }: IProps) => {
     return (
         <Style>
-            <CustomLink to={select?.active?"":`/image/${_id}`}>
+            <CustomLink to={select?.active ? "" : `/image/${_id}`}>
                 <div className="mainImage"
-                     onClick={() => {
-                        if(select?.active && !select.selectedItems.find(x => x === _id) && setSelect){
-                            setSelect({selectedItems:[_id,...select.selectedItems]})
-                        }else if(select?.active && select.selectedItems.find(x => x === _id) && setSelect){
-                            setSelect({selectedItems:[...select.selectedItems.filter(x => x !== _id)]})
+                    onClick={() => {
+                        if (select?.active && !select.selectedItems.find(x => x === _id) && setSelect) {
+                            setSelect({ selectedItems: [_id, ...select.selectedItems] })
+                        } else if (select?.active && select.selectedItems.find(x => x === _id) && setSelect) {
+                            setSelect({ selectedItems: [...select.selectedItems.filter(x => x !== _id)] })
                         }
                     }}
                 >
@@ -34,11 +35,11 @@ const ImageCard = ({ _id, image, tags, name, select,setSelect }: IProps) => {
                         select && select.active &&
                         <label className="inputLabel" htmlFor={_id} key={_id}>
                             <input
-                            name={name}
-                            type="checkbox"
-                            id={_id}
-                            className={select.selectedItems.find(x => x === _id) ? 'checked' : ''}
-                            value={select.selectedItems.find(x => x === _id)}
+                                name={name}
+                                type="checkbox"
+                                id={_id}
+                                className={select.selectedItems.find(x => x === _id) ? 'checked' : ''}
+                                value={select.selectedItems.find(x => x === _id)}
                             />
                         </label>
                     }

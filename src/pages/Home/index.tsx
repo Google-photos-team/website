@@ -1,39 +1,50 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import Style from './style'
 import FolderImg from "../../assets/FolderImg.svg"
 import AddIcon from "../../assets/AddIcon.svg"
-import Modal from '../../components/Modal'
+import ModalV2 from '../../components/ModalV2'
 import AddFolder from '../../modals/AddFolder'
 import CustomLink from '../../components/CustomLink'
 import Operations from '../../components/Operations'
 import { deleteFolders, getFolders } from '../../api/FoldersAPI'
+import { toast } from 'react-toastify'
+import Loading from '../../components/Loading'
 
-interface stateProps{
+interface stateProps {
     active: boolean,
     selectedItems: string[]
 }
 
 const Home = () => {
-    const [data,setData] = useState<{_id:string,name:string}[]>([]);
-    const [addFileModal,setAddFileModal] = useState(false);
+    const [data, setData] = useState<{ _id: string, name: string }[]>([]);
+    const [addFileModal, setAddFileModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [select,setSelects] = useState<stateProps>({
+    const [select, setSelects] = useState<stateProps>({
         active: false,
-        selectedItems:[],
+        selectedItems: [],
     });
 
-    const setSelect = (obj:{active?:boolean,selectedItems?:string[]}) => setSelects(prev => ({...prev,...obj}))
+    const setSelect = (obj: { active?: boolean, selectedItems?: string[] }) => setSelects(prev => ({ ...prev, ...obj }))
 
     useEffect(() => {
-        getFolders().then((folders) => setData(folders))
-      return () => {}
+        setIsLoading(true);
+        getFolders().then((folders) => {
+            setData(folders);
+        }).catch((error) => {
+            toast.error(error.message as string)
+        }).finally(() => {
+            setIsLoading(false);
+        });
     }, [])
 
-    const handleDelete = async () => {
-        await deleteFolders({ids:select.selectedItems}).then(() => {
-            setData(prev => [...prev.filter(item => !select.selectedItems.find(x => x === item._id))])
-        })
-        setSelect({active:false,selectedItems:[]})
+    const handleDelete = () => {
+        deleteFolders({ ids: select.selectedItems, handleAction: () => setData(prev => [...prev.filter(item => !select.selectedItems.find(x => x === item._id))]) })
+        setSelect({ active: false, selectedItems: [] })
+    }
+
+    if (isLoading) {
+        return <Loading />
     }
     
     return (
@@ -44,13 +55,13 @@ const Home = () => {
                     <img src={AddIcon} alt="" />
                 </div>
                 {data.map(item => (
-                    <CustomLink key={item._id} to={select.active?"":`/folder/${item._id}`}>
+                    <CustomLink key={item._id} to={select.active ? "" : `/folder/${item._id}`}>
                         <div className="folder"
                             onClick={() => {
-                                if(select.active && !select.selectedItems.find(x => x === item._id)){
-                                    setSelect({selectedItems:[item._id,...select.selectedItems]})
-                                }else if(select.active && select.selectedItems.find(x => x === item._id)){
-                                    setSelect({selectedItems:[...select.selectedItems.filter(x => x !== item._id)]})
+                                if (select.active && !select.selectedItems.find(x => x === item._id)) {
+                                    setSelect({ selectedItems: [item._id, ...select.selectedItems] })
+                                } else if (select.active && select.selectedItems.find(x => x === item._id)) {
+                                    setSelect({ selectedItems: [...select.selectedItems.filter(x => x !== item._id)] })
                                 }
                             }}
                         >
@@ -61,11 +72,11 @@ const Home = () => {
                                 select.active &&
                                 <label className="inputLabel" htmlFor={item._id} key={item._id}>
                                     <input
-                                    name={item.name}
-                                    type="checkbox"
-                                    id={item._id}
-                                    className={select.selectedItems.find(x => x === item._id) ? 'checked' : ''}
-                                    value={select.selectedItems.find(x => x === item._id)}
+                                        name={item.name}
+                                        type="checkbox"
+                                        id={item._id}
+                                        className={select.selectedItems.find(x => x === item._id) ? 'checked' : ''}
+                                        value={select.selectedItems.find(x => x === item._id)}
                                     />
                                 </label>
                             }
@@ -73,12 +84,12 @@ const Home = () => {
                     </CustomLink>
                 ))}
             </Style>
-            <Modal
-                close={() => setAddFileModal(false)}
-                isOpen={addFileModal}
-                Content={AddFolder}
-                handleAction={({_id,name}) => setData(prev => [...prev,{_id,name}])}
-            />
+            {addFileModal && <ModalV2 close={() => setAddFileModal(false)}>
+                <AddFolder
+                    close={() => setAddFileModal(false)}
+                    addFolder={({ _id, name }) => setData(prev => [...prev, { _id, name }])}
+                />
+            </ModalV2>}
         </>
     )
 }

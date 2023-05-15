@@ -16,7 +16,7 @@ interface IProps {
     color?: "primary" | "secondary" | "danger",
     size?: "large" | "medium" | "small",
     margin?: string,
-    fullWidth?: boolean
+    fullWidth?: boolean,
 }
 
 // size

@@ -8,6 +8,7 @@ const Style = styled.div`
     margin-bottom: 30px;
 
     .mainImage{
+      border: 1px solid #CCC;
       width: 100%;
       border-radius: 10px;
       aspect-ratio: 420/400;
@@ -26,11 +27,14 @@ const Style = styled.div`
     .tags{
       display: flex;
       align-items: center;
+      max-width: 100%;
+      overflow: hidden;
       gap: 2%;
     }
     
     .card_tag{
-      width: 32%;
+      width: fit-content;
+      white-space: nowrap;
     }
 
     /* ----------------------------------- */
@@ -49,7 +53,7 @@ const Style = styled.div`
       height: 25px;
       border-radius: 0.15em;
       margin-right: 0.5em;
-      border: 1px solid ${props=> props.theme.colors.shades.black};
+      border: 1px solid ${props => props.theme.colors.shades.black};
       border-radius: 6px;
       background: transparent;
       outline: none;

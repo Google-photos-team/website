@@ -5,30 +5,54 @@ import InputFiled from '../../components/InputFiled';
 import { H5 } from '../../components/Typography';
 import Style from './style'
 import TagsInput from './TagsInput';
+import { createImage } from '../../api/ImagesAPI';
+import { createImageSchema } from '../../validation/image';
+import { toast } from 'react-toastify';
 
-interface props {
-  className: string,
+interface IProps {
+  folder_id: string,
   close: () => void,
-  onClick: (e: any) => void,
-  exitIcon: React.ReactNode,
+  addImage: (image: Image) => void
 }
 
-const AddImage = ({ className, close, onClick, exitIcon }: props) => {
-  const [img, setImg] = useState("");
+const AddImage = ({ addImage, folder_id, close }: IProps) => {
+  const [image, setImage] = useState("");
   const [imgTitle, setImgTitle] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handelUpdate = () => {
-    // TODO: API CALL TO ADD IMAGE
-    close();
+  const handelAdd = () => {
+    // TODO: VALIDATION BEFORE ADD IMAGE
+    const imageData = {
+      folder_id,
+      image,
+      name: imgTitle,
+      tags
+    };
+
+    createImageSchema.validate(imageData, { abortEarly: false }).then(async () => {
+      setIsLoading(true);
+      try {
+        const resData = await createImage(imageData);
+        addImage(resData)
+        toast.success("Image uploaded successfully")
+      } catch (error) {
+        // @ts-ignore
+        toast.error(error.message as string)
+      }
+
+      setIsLoading(false);
+      close();
+    }).catch(({ errors }) => {
+      errors.map((el: string) => toast.error(el))
+    })
   }
 
   return (
-    <Style className={className} onClick={onClick}>
-      {exitIcon}
+    <Style>
       <H5 margin="0 0 0.5rem" weight={500} color="black">Upload new image</H5>
       <ImageInput
-        onChange={(value) => { setImg(value) }} />
+        onChange={(value) => { setImage(value) }} />
 
       <InputFiled
         className='image_title'
@@ -48,12 +72,12 @@ const AddImage = ({ className, close, onClick, exitIcon }: props) => {
           setTags(prev => ([...prev.filter(t => t !== tag)]))
         }}
       />
-      
+
       <Button
         margin='1rem 0 0'
         fullWidth
-        onClick={handelUpdate}
-      >Add Image</Button>
+        onClick={isLoading ? () => { } : handelAdd}
+      >{isLoading ? "Uploading ..." : "Add Image"}</Button>
     </Style>
   )
 }

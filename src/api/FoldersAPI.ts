@@ -2,20 +2,27 @@ import axios from "axios"
 
 
 export const getFolders = async () => {
-  return await axios.get('/folders')
-    .then((response) => response.data.folders);
+  const { data } = await axios.get('/folders');
+  if (data.status) {
+    return data.data
+  } else {
+    throw new Error(data.message)
+  }
 }
 
-export const createFolder = async ({name}:{name:string}) => {
-  return await axios.post('/folders/create', {name})
-  .then((response) => response.data.data);
+export const createFolder = async (name: string) => {
+  const { data } = await axios.post('/folders/create', { name });
+  if (data.status) {
+    return data.data
+  } else {
+    throw new Error(data.message)
+  }
 }
 
-export const deleteFolders = async ({ids}:{ids:string[]}) => {
-  return await axios.post('/folders/delete', {folders: ids});
-}
-
-export const getFolderById = async({id}:{id:string}) => {
-  return await axios.get(`/folders/${id}`)
-  .then((response) => response.data.data);
+export const deleteFolders = ({ ids, handleAction }: { ids: string[], handleAction?: () => void }) => {
+  axios.post('/folders/delete', { folders: ids }).then((response) => {
+    if (handleAction) handleAction()
+  }).catch((error) => {
+    console.log(error)
+  })
 }

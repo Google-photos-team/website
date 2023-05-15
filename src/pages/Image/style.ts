@@ -13,6 +13,13 @@ const Styles = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 70dvh;
+
+    >img{
+      height:100%;
+      object-fit: cover;
+      border:1px solid #ccc;
+    }
   }
 
   .itemImage img {
