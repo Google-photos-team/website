@@ -4,48 +4,49 @@ import { H5 } from '../Typography'
 import Style from './style'
 
 interface IProps {
-    id: string,
-    img: string,
-    title: string,
+    _id: string,
+    name: string, // image_name
+    image: string, // base64 image
     tags: string[],
-    select?:{
+    select?: {
         active: boolean,
         selectedItems: string[]
     },
-    setSelect?:(obj:{active?:boolean,selectedItems?:string[]}) => void
+    setSelect?: (obj: { active?: boolean, selectedItems?: string[] }) => void
 }
 
-const ImageCard = ({ id, img, tags, title, select,setSelect }: IProps) => {
+
+const ImageCard = ({ _id, name, image, tags, select, setSelect }: IProps) => {
     return (
         <Style>
-            <CustomLink to={select?.active?"":`/image/${id}`}>
+            <CustomLink to={select?.active ? "" : `/image/${_id}`}>
                 <div className="mainImage"
-                     onClick={() => {
-                        if(select?.active && !select.selectedItems.find(x => x === id) && setSelect){
-                            setSelect({selectedItems:[id,...select.selectedItems]})
-                        }else if(select?.active && select.selectedItems.find(x => x === id) && setSelect){
-                            setSelect({selectedItems:[...select.selectedItems.filter(x => x !== id)]})
+                    onClick={() => {
+                        if (select?.active && !select.selectedItems.find(x => x === _id) && setSelect) {
+                            setSelect({ selectedItems: [_id, ...select.selectedItems] })
+                        } else if (select?.active && select.selectedItems.find(x => x === _id) && setSelect) {
+                            setSelect({ selectedItems: [...select.selectedItems.filter(x => x !== _id)] })
                         }
                     }}
                 >
-                    <img src={img} alt="" />
+                    <img src={image} alt="" />
 
                     {
                         select && select.active &&
-                        <label className="inputLabel" htmlFor={id} key={id}>
+                        <label className="inputLabel" htmlFor={_id} key={_id}>
                             <input
-                            name={title}
-                            type="checkbox"
-                            id={id}
-                            className={select.selectedItems.find(x => x === id) ? 'checked' : ''}
-                            value={select.selectedItems.find(x => x === id)}
+                                name={name}
+                                type="checkbox"
+                                id={_id}
+                                className={select.selectedItems.find(x => x === _id) ? 'checked' : ''}
+                                value={select.selectedItems.find(x => x === _id)}
                             />
                         </label>
                     }
                 </div>
             </CustomLink>
-            <CustomLink to={`/image/${id}`}>
-                <H5 transform='capitalize'>{title}</H5>
+            <CustomLink to={`/image/${_id}`}>
+                <H5 transform='capitalize'>{name}</H5>
             </CustomLink>
             <div className="tags">
                 {tags.map((tag, index) => (

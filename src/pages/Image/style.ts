@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const Styles = styled.div`
+  position: relative;
+
   .item {
     display: flex;
     padding: 0 2rem;
@@ -11,6 +13,13 @@ const Styles = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 70dvh;
+
+    >img{
+      height:100%;
+      object-fit: cover;
+      border:1px solid #ccc;
+    }
   }
 
   .itemImage img {
@@ -30,12 +39,16 @@ const Styles = styled.div`
   }
 
   .menu{
+    position: absolute;
+    top: 14px;
+    right: 0;
+    width: 28px;
+    height: 28px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-    cursor:pointer;
-    margin-bottom:20px;
-  
+    cursor: pointer;
+    user-select: none;
   }
 
 

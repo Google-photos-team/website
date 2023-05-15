@@ -14,7 +14,9 @@ declare module 'styled-components' {
         gray: string,
         lightRed: string,
         skyBlue: string, 
-        skyBlueHover: string
+        skyBlueHover: string,
+        orange:string,
+        lightGrey:string
       }
       shades: {
         white: string

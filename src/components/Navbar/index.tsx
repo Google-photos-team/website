@@ -5,11 +5,17 @@ import Input from '../Input'
 import useDebounce from '../../hooks/useDebounce'
 import { useLocation, useNavigate } from 'react-router'
 import { PATHS } from '../../router'
+import Menu from '../../pages/Image/components/Menu'
+import { useAuth } from '../../contexts/authContext'
 
 const Navbar = () => {
+  const {user} = useAuth();
+
   const { search, pathname } = useLocation();
   const [searchValue, setSearchValue] = useState(decodeURI(search.split("=")[1] ? "" : ""));
   const deferredValue = useDebounce(searchValue, 500);
+  const [openMenu, setOpenMenu] = useState(false)
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,12 +39,13 @@ const Navbar = () => {
           fullWidth />
       </div>
       <div className="user">
-        <div className="icon">
-          <img src={Avatar} alt="" />
+        <div className="icon" onClick={() => setOpenMenu(prev => !prev)} onBlur={() => setOpenMenu(false)} tabIndex={0}>
+          <img src={user?.avatar || Avatar} alt="" />
+          {openMenu && <Menu className='dropMenuNav' typeOne='Logout' typeTwo='Settings' setOpenMenu={setOpenMenu} />}
         </div>
 
         <div className="name">
-          Shadow
+          {user?.username}
         </div>
       </div>
     </Style>

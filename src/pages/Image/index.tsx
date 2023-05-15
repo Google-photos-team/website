@@ -1,34 +1,66 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { H4, Body1 } from '../../components/Typography'
 import menu from '../../assets/ImagePage/menu.png'
 import Styles from './style'
-import imageForModal from '../../assets/ImagePage/Image.png'
 import Hashtags from './components/Hashtags'
 import Menu from './components/Menu'
+import { useParams } from 'react-router'
+import { getImageById } from '../../api/ImagesAPI'
+import Loading from '../../components/Loading'
 
 const Image: React.FC = () => {
-    const [openMenu, setOpenMenu] = useState(false)
-    const [closeMenu, setCloseMenu] = useState(true)
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    const [isLoading, setIsLoading] = useState(false);
+    const { id: image_id } = useParams();
 
+    const [image, setImage] = useState<Image>({
+        _id: image_id || "",
+        folder_id: "",
+        image: "",
+        name: "",
+        tags: []
+    });
+
+    const setFolderId = (folder_id: string) => {
+        setImage(prev => ({ ...prev, folder_id: folder_id }))
+    }
+
+    useEffect(() => {
+        setIsLoading(true);
+        getImageById(image_id || "")
+            .then((data) => {
+                setImage(data)
+                setIsLoading(false);
+            }).catch(error => {
+                console.log(error);
+                setIsLoading(false);
+            })
+    }, [])
+
+    if (isLoading) {
+        <Loading />
+    }
 
     return (
         <Styles className='containerWidth' >
-
-            <div className="menu" >
-                <img src={menu} alt="menu"
-                    onClick={() => {
-                        setOpenMenu(true)
-                        setCloseMenu(true)
-                    }}
-                />
-                {openMenu === true ?  <Menu /> : "" && closeMenu === true ? <Menu />: ""}
+            <div className="menu" onClick={() => setIsMenuOpen(prev => !prev)} tabIndex={0}>
+                <img src={menu} alt="menu" />
+                {isMenuOpen && <Menu
+                    setFolderId={setFolderId}
+                    closeMenu={() => { setIsMenuOpen(false) }}
+                    image_id={image._id}
+                    folder_id={image.folder_id}
+                    className='dropMenu'
+                    typeOne='MOVE'
+                    typeTwo='DELETE'
+                />}
             </div>
 
             <div className='item section__padding'>
 
                 <div className="itemImage">
-                    <img src={imageForModal} alt="Image For Modal" />
+                    <img src={image.image} alt={image.name} />
                 </div>
 
                 <div className="item-content">
@@ -39,7 +71,7 @@ const Image: React.FC = () => {
                             align="center"
                             transform="capitalize"
                         >
-                            Abstact Smoke Red Blue
+                            {image.name}
                         </H4>
                     </div>
 
@@ -54,7 +86,7 @@ const Image: React.FC = () => {
                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book
                         </Body1>
                     </div>
-                    <Hashtags />
+                    <Hashtags tags={image.tags} />
                 </div>
             </div>
         </Styles>
