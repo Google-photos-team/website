@@ -42,8 +42,8 @@ const AddFolder = ({ close, addFolder }: props) => {
         fullWidth
         placeholder='name' />
 
-      <button className="createButton" onClick={handelCreate}>
-        <Body1 weight={700} color="semiWhite">Create</Body1>
+      <button className="createButton" onClick={isLoading ? () => { } : handelCreate}>
+        <Body1 weight={700} color="semiWhite">{isLoading ? "Loading ..." : "Create"}</Body1>
       </button>
     </Style>
   )
