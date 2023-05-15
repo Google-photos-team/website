@@ -15,7 +15,15 @@ import CheckBox from '../../components/CheckBox';
 // icons
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
+import { AuthSignup } from '../../api/AuthAPI';
+import { useNavigate } from 'react-router';
+import { useAuth } from '../../contexts/authContext';
+
+
+// import { signup } from '../../api/AuthAPI';
 const Signup = () => {
+    const navigate = useNavigate()
+    const {setToken}= useAuth()
     const [data, setData] = useState({
         username: { value: "", error: "" },
         password: { value: "", error: "" },
@@ -27,6 +35,17 @@ const Signup = () => {
     const handelInputsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setData(prev => ({ ...prev, [e.target.name]: { value: e.target.value, error: "" } }))
     }, [setData])
+    
+    const handlerSubmit = async(e: React.FormEvent<HTMLFormElement>) => {      
+        e.preventDefault()
+        const token = await AuthSignup(data.username.value,data.password.value,data.passwordConfirm.value)
+        if (token.error) {
+            console.log(token.error)
+        }else{
+            setToken(token,acceptTerms)
+            navigate(PATHS.HOME)
+        }
+    }
 
     return (
         <Style>
@@ -35,7 +54,7 @@ const Signup = () => {
 
             <div className="form_container">
                 <H5 margin='0 0 20px' weight={700} transform="capitalize">login Into your Account</H5>
-                <form>
+                <form onSubmit={handlerSubmit}>
                     <div className="input_group">
                         <FaUser className='input_group_icon' />
                         <InputFiled
@@ -76,8 +95,7 @@ const Signup = () => {
                         onChange={() => setAcceptTerms(prev => !prev)}
                         value={acceptTerms}
                         label="Accept terms and conditions" />
-
-                    <Button fullWidth margin='0.7rem 0'>Login</Button>
+                    <Button fullWidth margin='0.7rem 0' onClick={(e)=>{handlerSubmit}}>Login</Button>
                 </form>
                 <CustomLink to={PATHS.LOGIN}>Already have an account?</CustomLink>
             </div>
