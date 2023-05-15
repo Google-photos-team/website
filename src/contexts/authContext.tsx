@@ -1,38 +1,38 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { authorizationHeader, defaults } from "../api/config/config";
-import { getProfile } from "../api/ProfileApi";
+import { getProfile } from "../api/ProfileAPI";
 
-interface AuthContextProps{
-  login:()=>void;
-  logout:()=>void;
-  signup:()=>void;
-  user:{
-    username:string;
-    avatar:string;
+interface AuthContextProps {
+  login: () => void;
+  logout: () => void;
+  signup: () => void;
+  user: {
+    username: string;
+    avatar: string;
   };
 }
 
 const AuthContext = createContext<AuthContextProps>({
-  login:()=>{},
-  logout:()=>{},
-  signup:()=>{},
-  user:{
-    username:"",
-    avatar:""
+  login: () => { },
+  logout: () => { },
+  signup: () => { },
+  user: {
+    username: "",
+    avatar: ""
   }
 });
 
 export const useAuth = () => useContext(AuthContext);
 
-function useAuthProvider(){
-  const [user,setUser] = useState<{username:string,avatar:string}>({username:"",avatar:""});
+function useAuthProvider() {
+  const [user, setUser] = useState<{ username: string, avatar: string }>({ username: "", avatar: "" });
   const [cookies, setCookie] = useCookies(['auth-token']);
 
   const signup = () => {
     console.log("Signup")
   }
-  
+
   const login = () => {
     console.log("Login")
   }
@@ -42,28 +42,27 @@ function useAuthProvider(){
   }
 
   const token = () => {
-    getProfile({setState:setUser});
+    getProfile({ setState: setUser });
   }
 
   useEffect(() => {
     defaults();
-  
-    return () => {}
-  }, [])
-  
-  useEffect(() => {
-    if(cookies["auth-token"]){
-      authorizationHeader({token:cookies["auth-token"]});
 
+    return () => { }
+  }, [])
+
+  useEffect(() => {
+    if (cookies["auth-token"]) {
+      authorizationHeader({ token: cookies["auth-token"] });
       token();
-    }else{
+    } else {
       console.log("Token does not exist")
     }
-  
-    return () => {}
+
+    return () => { }
   }, [cookies["auth-token"]])
-  
-  
+
+
 
   return {
     login,
@@ -75,7 +74,7 @@ function useAuthProvider(){
 }
 
 
-export const AuthProvider = ({ children }:{children:React.ReactNode}) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const auth = useAuthProvider();
   return (
     <AuthContext.Provider value={auth}>

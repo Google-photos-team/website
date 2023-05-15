@@ -26,11 +26,10 @@ const Login = () => {
     
     const handlerSubmit = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault()
-        console.log("first")
         axios
         .post('https://image-project.onrender.com/auth/login', {
-                username: data.username,
-                password: data.password
+                username: data.username.value,
+                password: data.password.value
               })
         .then( (response) => {
             console.log(response)
