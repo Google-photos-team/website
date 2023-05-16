@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import Style from './style'
 // components
-import { H4, H5 } from '../../components/Typography';
+import { H5 } from '../../components/Typography';
 // images
 import LoginLargeShape from '../../assets/LoginLargeShape.svg';
 import LoginSmallShape from '../../assets/LoginSmallShape.svg';
@@ -23,38 +23,53 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 //useAuth context
 import { useAuth } from '../../contexts/authContext';
+import { AuthSignup } from '../../api/AuthAPI';
+import { toast } from 'react-toastify';
+import Loading from '../../components/Loading';
 const Signup = () => {
     const navigate = useNavigate()
-    const {setToken}= useAuth()
+    const { setToken, token } = useAuth()
     const [data, setData] = useState({
         username: { value: "", error: "" },
         password: { value: "", error: "" },
         passwordConfirm: { value: "", error: "" },
     });
 
+    useEffect(() => {
+        if (token) {
+            navigate(PATHS.HOME)
+        }
+    }, [])
+
     const [acceptTerms, setAcceptTerms] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handelInputsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setData(prev => ({ ...prev, [e.target.name]: { value: e.target.value, error: "" } }))
     }, [setData])
 
-    const handlerSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+    const handlerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        axios
-        .post('https://image-project.onrender.com/auth/signup', {
-                username: data.username.value,
-                password: data.password.value,
-                passwordConfirm: data.passwordConfirm.value
-              })
-        .then( (response) => {
-            navigate(PATHS.HOME)
-            setToken(response.data.data.token,acceptTerms)
-        })
-        .catch( (error) => {
-            console.log(error.message)
-        });
-      };
-    
+        if (acceptTerms) {
+            setIsLoading(true);
+
+            AuthSignup(data.username.value, data.password.value)
+                .then(token => {
+                    navigate(PATHS.HOME)
+                    setToken(token, true)
+                }).catch((error) => {
+                    toast.error(error.message)
+                }).finally(() => {
+                    setIsLoading(false);
+                })
+        } else {
+            toast.warn("you have to agree on our terms and conditions first")
+        }
+    };
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <Style>
@@ -105,7 +120,7 @@ const Signup = () => {
                         value={acceptTerms}
                         label="Accept terms and conditions" />
 
-                    <Button fullWidth margin='0.7rem 0' onClick={(e)=>handlerSubmit}>Login</Button>
+                    <Button fullWidth margin='0.7rem 0' onClick={(e) => handlerSubmit}>Login</Button>
                 </form>
                 <CustomLink to={PATHS.LOGIN}>Already have an account?</CustomLink>
             </div>

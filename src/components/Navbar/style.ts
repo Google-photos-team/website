@@ -7,28 +7,40 @@ const Style = styled.div`
   z-index: 100;
   width: 100%;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-areas:"path search search search user";
 
+  align-items: center;
   padding: 22px 30px;
   background: ${props => props.theme.colors.primary.semiBlack};
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.08);
 
   .path{
+    grid-area: path;
+
     font-family: 'Inter';
     font-weight: 500;
     font-size: 20px;
     line-height: 18px;
+    display: flex;
+    align-items: center;
     color: ${props => props.theme.colors.primary.semiWhite};
   }
 
   .search{
-    width: 70%;
-  }
-  .user{
+    grid-area: search;
+
     display: flex;
     align-items: center;
+    justify-content: center;
+  }
+
+  .user{
+    grid-area: user;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     gap: 12px;
   }
 
@@ -56,16 +68,16 @@ const Style = styled.div`
 
 
   @media (max-width: 580px) {
-    flex-direction: column;
-    gap: 16px;
-    
-    .path{
-      align-self: flex-start;
-      order: 2;
-    }
+    gap: 8px;
+    grid-template-areas:"user path" "search search" ;
+    padding: 12px 20px 6px;
 
     .user{
-      align-self: flex-end;
+      justify-content: flex-start;
+    }
+
+    .path{
+      justify-content: flex-end;
     }
   }
 `

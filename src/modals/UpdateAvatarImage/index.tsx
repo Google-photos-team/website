@@ -5,13 +5,11 @@ import { Body1 } from '../../components/Typography';
 import Style from './style'
 
 interface props {
-  className: string,
   close: () => void,
-  onClick: (e: any) => void,
-  exitIcon: React.ReactNode,
+
 }
 
-const UpdateAvatarImage = ({ className, close, onClick, exitIcon }: props) => {
+const UpdateAvatarImage = ({ close }: props) => {
   const [avatar, setAvatar] = useState("");
 
   const handelUpdate = () => {
@@ -20,8 +18,7 @@ const UpdateAvatarImage = ({ className, close, onClick, exitIcon }: props) => {
   }
 
   return (
-    <Style className={className} onClick={onClick}>
-      {exitIcon}
+    <Style>
       <Body1 weight={500} color="black">Update your avatar image</Body1>
       <ImageInput
         onChange={(value) => { setAvatar(value) }} />

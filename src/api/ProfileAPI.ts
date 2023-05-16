@@ -1,13 +1,12 @@
-import axios from "axios"
+import { myAxios } from "./config/config"
 
-export const getProfile = ({ setState }: { setState: (data: any) => void }) => {
-  axios.get("/profile").then(({ data }) => {
-    setState({
-      username: data.data.username,
-      avatar: data.data.avatar,
-    })
-  })
-    .catch((error) => {
-      console.log(error)
-    })
+export const getProfile = async () => {
+  try {
+    const { data } = await myAxios.get("/profile");
+    if (data.status) {
+      return data.data;
+    }
+  } catch (error: any) {
+    throw new Error(error.response.data.message)
+  }
 }

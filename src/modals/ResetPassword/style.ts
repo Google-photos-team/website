@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 const Style = styled.div`
-  width: clamp(500px,40%,800px);
-
   display: flex;
   flex-direction: column;
 

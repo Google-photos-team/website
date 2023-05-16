@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Button from '../../../../components/Button'
-import Modal from '../../../../components/Modal'
+import ModalV2 from '../../../../components/ModalV2'
 import { H4 } from '../../../../components/Typography'
 import DeleteAccount from '../../../../modals/DeleteAccount'
 import ResetPassword from '../../../../modals/ResetPassword'
@@ -11,16 +11,16 @@ const DangerZone = () => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     return (
         <>
-            <Modal
-                Content={ResetPassword}
-                close={() => { setIsResetPasswordModalOpen(false) }}
-                isOpen={isResetPasswordModalOpen}
-            />
-            <Modal
-                Content={DeleteAccount}
-                close={() => { setIsDeleteModalOpen(false) }}
-                isOpen={isDeleteModalOpen}
-            />
+            {isResetPasswordModalOpen && <ModalV2 close={() => setIsResetPasswordModalOpen(false)}>
+                <ResetPassword
+                    close={() => setIsResetPasswordModalOpen(false)}
+                />
+            </ModalV2>}
+            {isDeleteModalOpen && <ModalV2 close={() => setIsDeleteModalOpen(false)}>
+                <DeleteAccount
+                    close={() => setIsDeleteModalOpen(false)}
+                />
+            </ModalV2>}
             <Style>
                 <H4>Danger zone</H4>
                 <div className="buttons">
@@ -32,7 +32,7 @@ const DangerZone = () => {
                     <Button
                         color='danger'
                         fullWidth
-                        onClick={() => {setIsDeleteModalOpen(true)}}
+                        onClick={() => { setIsDeleteModalOpen(true) }}
                     >Delete Account</Button>
                 </div>
             </Style>

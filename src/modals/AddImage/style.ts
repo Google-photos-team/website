@@ -3,7 +3,6 @@ import styled from "styled-components";
 const Style = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 25px;
 
   .image_title{
     margin:0.5rem 0 ;

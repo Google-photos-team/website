@@ -7,6 +7,7 @@ import Menu from './components/Menu'
 import { useParams } from 'react-router'
 import { getImageById } from '../../api/ImagesAPI'
 import Loading from '../../components/Loading'
+import requireAuth from '../../hocs/requireAuth'
 
 const Image: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -93,4 +94,4 @@ const Image: React.FC = () => {
     )
 }
 
-export default Image
+export default requireAuth(Image)

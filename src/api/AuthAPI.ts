@@ -1,46 +1,30 @@
-import axios from "axios"
+import { myAxios } from "./config/config"
 
-
-export const AuthLogin = async (username:string, password:string) => {
-  const data = await axios.post('/auth/login',
-    {
-     username,password
-    });
-    try {
-      if (data.status) {
-        return data.data
-      } else {
-        throw new Error(data.data.message)
-      }
-    } catch (error) {
-      return {
-      error:"Something went wrong"
-  
-      }
+export const AuthLogin = async (username: string, password: string) => {
+  try {
+    const { data } = await myAxios.post('/auth/login', { username, password });
+    if (data.status) {
+      return data.data.token
     }
+  } catch (error: any) {
+    throw new Error(error.response.data.message)
+  }
 }
 
 
-export const AuthSignup =  async(username:string, password:string,passwordConfirm:string) => {
-    const {data} =  await axios.post('/auth/signup',{
-      username,password,passwordConfirm
-    })
-    try {
-      if (data.status) {
-        return data.token
-      } else {
-        throw new Error(data.message)
-      }
-    } catch (error) {
-      return {
-      error:"Something went wrong"
-  
-      }
+export const AuthSignup = async (username: string, password: string) => {
+  try {
+    const { data } = await myAxios.post('/auth/signup', { username, password })
+    if (data.status) {
+      return data.data.token
     }
+  } catch (error: any) {
+    throw new Error(error.response.data.message)
   }
+}
 
-export const AuthLogout =  async() => {
-  const {data} =  await axios.post('https://image-project.onrender.com/auth/logout',{
-    
-  })  
+export const AuthLogout = async () => {
+  const { data } = await myAxios.post('https://image-project.onrender.com/auth/logout', {
+
+  })
 }
