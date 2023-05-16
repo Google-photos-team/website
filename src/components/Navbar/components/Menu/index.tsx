@@ -3,24 +3,19 @@ import CustomLink from "../../../../components/CustomLink";
 import { PATHS } from "../../../../router";
 import MenuStyle from "./style";
 
-interface props {
-    setOpenMenu: (value: boolean) => void,
-    typeOne: string,
-    typeTwo: string,
-    className: string
-
+interface IProps {
 }
 
-const Menu = ({ className, typeOne, typeTwo, setOpenMenu }: props) => {
+const Menu = ({ }: IProps) => {
     return (
-        <MenuStyle onClick={(e) => e.stopPropagation()}>
-            <div className={className}>
+        <MenuStyle>
+            <div className="dropMenuNav">
                 <ul className="menuTypes">
                     <CustomLink to={PATHS.SIGN_UP}>
-                        <li className="signup">{typeOne}</li>
+                        <li className="signup">Logout</li>
                     </CustomLink>
                     <CustomLink to={PATHS.SETTINGS}>
-                        <li className="settings">{typeTwo}</li>
+                        <li className="settings">Settings</li>
                     </CustomLink>
                 </ul>
             </div>

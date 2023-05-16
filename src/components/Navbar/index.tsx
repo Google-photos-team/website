@@ -5,49 +5,55 @@ import Input from '../Input'
 import useDebounce from '../../hooks/useDebounce'
 import { useLocation, useNavigate } from 'react-router'
 import { PATHS } from '../../router'
-import Menu from '../../pages/Image/components/Menu'
+
 import { useAuth } from '../../contexts/authContext'
+import Menu from './components/Menu'
+import Button from '../Button'
+import CustomLink from '../CustomLink'
 
 const Navbar = () => {
-  const {user} = useAuth();
+  const { token } = useAuth();
 
   const { search, pathname } = useLocation();
   const [searchValue, setSearchValue] = useState(decodeURI(search.split("=")[1] ? "" : ""));
-  const deferredValue = useDebounce(searchValue, 500);
-  const [openMenu, setOpenMenu] = useState(false)
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [user, setUser] = useState({})
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (search && deferredValue) {
-      navigate(PATHS.SEARCH + '?q=' + deferredValue);
-    }
-
-    if (!search && pathname === PATHS.SEARCH) {
-      setSearchValue("")
-    }
-  }, [deferredValue, navigate, search])
+  const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(PATHS.SEARCH + '?q=' + searchValue);
+  }
 
   return (
     <Style>
-      <div className="path">Home /</div>
-      <div className="search">
+      <div className="path">
+        <CustomLink to={PATHS.HOME}>Home /</CustomLink>
+      </div>
+      <form className="search" onSubmit={onSearch}>
         <Input
           value={searchValue}
           onChange={(e) => { setSearchValue(e.target.value) }}
           placeholder='search'
           fullWidth />
-      </div>
-      <div className="user">
-        <div className="icon" onClick={() => setOpenMenu(prev => !prev)} onBlur={() => setOpenMenu(false)} tabIndex={0}>
+        <Button>Search</Button>
+      </form>
+      <div></div>
+      {/* <div className="user">
+        <div
+          className="icon"
+          onClick={() => setIsMenuOpen(prev => !prev)}
+          onBlur={() => setIsMenuOpen(false)} tabIndex={0}>
           <img src={user?.avatar || Avatar} alt="" />
-          {openMenu && <Menu className='dropMenuNav' typeOne='Logout' typeTwo='Settings' setOpenMenu={setOpenMenu} />}
+          {isMenuOpen && <Menu />}
         </div>
 
         <div className="name">
           {user?.username}
         </div>
-      </div>
+      </div> */}
     </Style>
   )
 }

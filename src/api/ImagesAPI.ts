@@ -58,3 +58,14 @@ export const getImageById = async (id: string) => {
         throw new Error(error.response.data.message)
     }
 }
+
+export const searchInImages = async (query: string) => {
+    try {
+        const { data } = await myAxios.get(`/images/find/${query}`);
+        if (data.status) {
+            return data.data;
+        }
+    } catch (error: any) {
+        throw new Error(error.response.data.message)
+    }
+}
