@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import { addTokenToTheAxios } from "../api/config/config";
 
 interface AuthContextProps {
-  setToken: (token: string, remmember: boolean) => void;
+  setToken: (token: string, rememberMe: boolean) => void;
   logout: () => void;
   token: string;
 }
