@@ -26,6 +26,7 @@ import { useAuth } from '../../contexts/authContext';
 import { AuthSignup } from '../../api/AuthAPI';
 import { toast } from 'react-toastify';
 import Loading from '../../components/Loading';
+import { signupSchema } from '../../validation/authValidation';
 const Signup = () => {
     const navigate = useNavigate()
     const { setToken, token } = useAuth()
@@ -51,13 +52,17 @@ const Signup = () => {
     const handlerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (acceptTerms) {
-            setIsLoading(true);
-
-            AuthSignup(data.username.value, data.password.value)
+            signupSchema.validate({
+                username: data.username.value,
+                password: data.password.value,
+                passwordConfirm: data.passwordConfirm.value
+            }, { abortEarly: false }).then(async () => {
+                setIsLoading(true);
+                AuthSignup(data.username.value, data.password.value)
                 .then(token => {
                     navigate(PATHS.HOME)
                     setToken(token, true)
-                }).catch((error) => {
+                })}).catch((error) => {
                     toast.error(error.message)
                 }).finally(() => {
                     setIsLoading(false);
