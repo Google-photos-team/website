@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { PATHS } from "../router";
 
 interface AuthContextProps{
-  setToken:(token:string,remmember:boolean)=>void;
+  setToken:(token:string,rememberMe:boolean)=>void;
   logout:()=>void;
     token:string;
 }

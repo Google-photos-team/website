@@ -9,7 +9,13 @@ import Menu from '../../pages/Image/components/Menu'
 import { useAuth } from '../../contexts/authContext'
 
 const Navbar = () => {
-  const {user} = useAuth();
+  // const {user} = useAuth();
+  const [user,setUser] = useState({
+    data :{
+      username:"",
+      avatar:""
+    }
+  })
 
   const { search, pathname } = useLocation();
   const [searchValue, setSearchValue] = useState(decodeURI(search.split("=")[1] ? "" : ""));
@@ -40,12 +46,12 @@ const Navbar = () => {
       </div>
       <div className="user">
         <div className="icon" onClick={() => setOpenMenu(prev => !prev)} onBlur={() => setOpenMenu(false)} tabIndex={0}>
-          <img src={user?.avatar || Avatar} alt="" />
+          <img src={user?.data.avatar || Avatar} alt="" />
           {openMenu && <Menu className='dropMenuNav' typeOne='Logout' typeTwo='Settings' setOpenMenu={setOpenMenu} />}
         </div>
 
         <div className="name">
-          {user?.username}
+          {user?.data.username}
         </div>
       </div>
     </Style>
