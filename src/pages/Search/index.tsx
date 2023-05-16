@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Style from './style'
-import data from "../../mock/folder.json"
 import { useLocation } from 'react-router'
 import { H4, H5, Span } from '../../components/Typography'
 import ImageCard from '../../components/ImageCard'
