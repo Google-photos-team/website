@@ -16,15 +16,19 @@ import { PATHS } from '../../router';
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
+import { useAuth } from '../../contexts/authContext';
 
 const Login = () => {
+    const navigate = useNavigate()
+    const {setToken}= useAuth()
     const [data, setData] = useState({
         username: { value: "", error: "" },
         password: { value: "", error: "" },
     });
     
     
-    const handlerSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+    const handlerSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         axios
         .post('https://image-project.onrender.com/auth/login', {
@@ -32,12 +36,11 @@ const Login = () => {
                 password: data.password.value
               })
         .then( (response) => {
-            console.log(response)
-            console.log("response")
+            navigate(PATHS.HOME)
+            setToken(response.data.data.token,isRememberMeOn)
         })
         .catch( (error) => {
             console.log(error.message)
-            console.log("error")
         });
       };
     
@@ -54,7 +57,7 @@ const Login = () => {
 
             <div className="form_container">
                 <H5 margin='0 0 20px' weight={700} transform="capitalize">login Into your Account</H5>
-                <form>
+                <form onSubmit={handlerSubmit}>
                     <div className="input_group">
                         <FaUser className='input_group_icon' />
                         <InputFiled
@@ -82,10 +85,8 @@ const Login = () => {
                     <CheckBox
                         onChange={() => setIsRememberMeOn(prev => !prev)}
                         value={isRememberMeOn}
-                        label="Remember Me" />
-                        <input type="button" value="submit" title='submit' onClick={handlerSubmit} />
-                       
-                    <Button fullWidth margin='0.7rem 0'>Login</Button>
+                        label="Remember Me" />                       
+                    <Button fullWidth margin='0.7rem 0' onClick={(e)=>{handlerSubmit}}>Login</Button>
                 </form>
                 <CustomLink to={PATHS.SIGN_UP}>Don't have an account?</CustomLink>
             </div>

@@ -1,83 +1,51 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { authorizationHeader, defaults } from "../api/config/config";
-import { getProfile } from "../api/ProfileAPI";
+import { useNavigate } from "react-router";
+import { PATHS } from "../router";
 
-interface AuthContextProps {
-  login: () => void;
-  logout: () => void;
-  signup: () => void;
-  user: {
-    username: string;
-    avatar: string;
-  };
+interface AuthContextProps{
+  setToken:(token:string,remmember:boolean)=>void;
+  logout:()=>void;
+    token:string;
 }
 
 const AuthContext = createContext<AuthContextProps>({
-  login: () => { },
-  logout: () => { },
-  signup: () => { },
-  user: {
-    username: "",
-    avatar: ""
-  }
+  setToken:()=>{},
+  logout:()=>{},
+  token :"",
+ 
 });
 
 export const useAuth = () => useContext(AuthContext);
 
-function useAuthProvider() {
-  const [user, setUser] = useState<{ username: string, avatar: string }>({ username: "", avatar: "" });
-  const [cookies, setCookie] = useCookies(['auth-token']);
 
-  const signup = () => {
-    console.log("Signup")
-  }
-
-  const login = () => {
-    console.log("Login")
-  }
-
-  const logout = () => {
-    console.log("Logout")
-  }
-
-  const token = () => {
-    getProfile({ setState: setUser });
-  }
-
+export const AuthProvider = ({ children }:{children:React.ReactNode}) => {
+  const [token, setToken] = useState("")
+  const [cookies, setCookie,removeCookie] = useCookies(['auth-token']);
+  const navigate = useNavigate() 
   useEffect(() => {
-    defaults();
-
-    return () => { }
-  }, [])
-
-  useEffect(() => {
-    if (cookies["auth-token"]) {
-      authorizationHeader({ token: cookies["auth-token"] });
-      token();
-    } else {
-      console.log("Token does not exist")
+    if(cookies["auth-token"]){
+      authorizationHeader({token:cookies["auth-token"]});
+      setToken(cookies["auth-token"])
+      navigate(PATHS.HOME)
     }
+  }, [])
+  
+  const customSetToken = (token:string,rememberMe:boolean) =>{
+    if(rememberMe){
+      setCookie("auth-token",token)
+    }
+    setToken(token)
 
-    return () => { }
-  }, [cookies["auth-token"]])
-
-
-
-  return {
-    login,
-    logout,
-    signup,
-    token,
-    user
   }
-}
 
-
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const auth = useAuthProvider();
   return (
-    <AuthContext.Provider value={auth}>
+    <AuthContext.Provider value={{
+      setToken:customSetToken,
+      logout:()=>{},
+      token
+    }}>
       {children}
     </AuthContext.Provider>
   )
