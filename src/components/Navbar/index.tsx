@@ -1,31 +1,38 @@
-import React, { useState, useDeferredValue, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Style from './style'
-import Avatar from "../../assets/Avatar.png"
+import Avatar from "../../assets/no_user.png"
 import Input from '../Input'
-import useDebounce from '../../hooks/useDebounce'
 import { useLocation, useNavigate } from 'react-router'
 import { PATHS } from '../../router'
 
-import { useAuth } from '../../contexts/authContext'
 import Menu from './components/Menu'
 import Button from '../Button'
 import CustomLink from '../CustomLink'
+import { getProfile } from '../../api/ProfileAPI'
 
 const Navbar = () => {
-  const { token } = useAuth();
-
-  const { search, pathname } = useLocation();
+  const { search } = useLocation();
   const [searchValue, setSearchValue] = useState(decodeURI(search.split("=")[1] ? "" : ""));
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState<any>({})
+
 
   const navigate = useNavigate();
-
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate(PATHS.SEARCH + '?q=' + searchValue);
   }
+
+  // get user profile
+  useEffect(() => {
+    getProfile()
+      .then((profile) => {
+        setUser(profile);
+      }).catch((error) => {
+        console.log(error.message)
+      })
+  }, [])
 
   return (
     <Style>
@@ -41,19 +48,19 @@ const Navbar = () => {
         <Button>Search</Button>
       </form>
       <div></div>
-      {/* <div className="user">
+      <div className="user">
         <div
           className="icon"
           onClick={() => setIsMenuOpen(prev => !prev)}
           onBlur={() => setIsMenuOpen(false)} tabIndex={0}>
-          <img src={user?.avatar || Avatar} alt="" />
+          <img src={user.avatar || Avatar} alt="" />
           {isMenuOpen && <Menu />}
         </div>
 
         <div className="name">
-          {user?.username}
+          {user.username}
         </div>
-      </div> */}
+      </div>
     </Style>
   )
 }
