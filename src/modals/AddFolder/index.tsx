@@ -18,21 +18,30 @@ const AddFolder = ({ close, addFolder }: props) => {
     setName(e.target.value)
   }
 
-  const handelCreate = () => {
-    setIsLoading(true);
-    createFolder(name)
-      .then((data) => {
-        addFolder(data);
-      }).catch((error) => {
-        toast.error(error.message)
-      }).finally(() => {
-        setIsLoading(false);
-        close();
-      })
+  const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isLoading) {
+      return null
+    }
+
+    if (name) {
+      setIsLoading(true);
+      createFolder(name)
+        .then((data) => {
+          addFolder(data);
+        }).catch((error) => {
+          toast.error(error.message)
+        }).finally(() => {
+          setIsLoading(false);
+          close();
+        })
+    } else {
+      toast.error("folder name is required")
+    }
   }
 
   return (
-    <Style>
+    <Style onSubmit={handelSubmit}>
       <H5 weight={400} color="black">Folder Name</H5>
       <InputFiled
         label=''
@@ -42,7 +51,7 @@ const AddFolder = ({ close, addFolder }: props) => {
         fullWidth
         placeholder='name' />
 
-      <button className="createButton" onClick={isLoading ? () => { } : handelCreate}>
+      <button className="createButton">
         <Body1 weight={700} color="semiWhite">{isLoading ? "Loading ..." : "Create"}</Body1>
       </button>
     </Style>

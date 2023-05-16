@@ -11,7 +11,7 @@ import CustomLink from '../CustomLink'
 import { getProfile } from '../../api/ProfileAPI'
 
 const Navbar = () => {
-  const { search } = useLocation();
+  const { search, pathname } = useLocation();
   const [searchValue, setSearchValue] = useState(decodeURI(search.split("=")[1] ? "" : ""));
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -23,6 +23,10 @@ const Navbar = () => {
     e.preventDefault();
     if (searchValue) {
       navigate(PATHS.SEARCH + '?q=' + searchValue);
+    } else {
+      if (pathname.replace("/", "") === PATHS.SEARCH) {
+        navigate(PATHS.HOME);
+      }
     }
   }
 
