@@ -21,7 +21,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate(PATHS.SEARCH + '?q=' + searchValue);
+    if (searchValue) {
+      navigate(PATHS.SEARCH + '?q=' + searchValue);
+    }
   }
 
   // get user profile
