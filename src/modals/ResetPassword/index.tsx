@@ -4,13 +4,10 @@ import InputFiled from '../../components/InputFiled';
 import Style from './style'
 
 interface IProps {
-  className: string,
   close: () => void,
-  onClick: (e: any) => void,
-  exitIcon: React.ReactNode,
 }
 
-const ResetPassword = ({ className, close, onClick, exitIcon }: IProps) => {
+const ResetPassword = ({ close }: IProps) => {
   const [isFirstStep, setIsFirstStep] = useState(true);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -26,8 +23,7 @@ const ResetPassword = ({ className, close, onClick, exitIcon }: IProps) => {
     close();
   }
 
-  return <Style className={className} onClick={onClick}>
-    {exitIcon}
+  return <Style>
     {isFirstStep ? <>
       <InputFiled
         label='Current Password'

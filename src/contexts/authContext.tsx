@@ -1,7 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router";
-import { PATHS } from "../router";
 import { addTokenToTheAxios } from "../api/config/config";
 
 interface AuthContextProps {
@@ -23,12 +21,11 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState("")
   const [cookies, setCookie, removeCookie] = useCookies(['auth-token']);
-  const navigate = useNavigate()
+
   useEffect(() => {
     if (cookies["auth-token"] !== 'undefined') {
       setToken(cookies["auth-token"])
       addTokenToTheAxios(cookies["auth-token"]);
-      navigate(PATHS.HOME)
     }
   }, [])
 

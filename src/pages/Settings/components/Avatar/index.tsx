@@ -3,7 +3,7 @@ import Style from './style'
 import noUserImage from '../../../../assets/no_user.png';
 import editImage from '../../../../assets/icons/edit.svg';
 import { H4 } from '../../../../components/Typography';
-import Modal from '../../../../components/Modal';
+import ModalV2 from '../../../../components/ModalV2';
 import UpdateAvatarImage from '../../../../modals/UpdateAvatarImage';
 interface IProps {
     avatar?: string,
@@ -14,11 +14,9 @@ const Avatar = ({ avatar, username }: IProps) => {
     const [isUpdateAvatarModalOpen, setIsUpdateAvatarModalOpen] = useState(false)
     return (
         <>
-            <Modal
-                Content={UpdateAvatarImage}
-                close={() => setIsUpdateAvatarModalOpen(false)}
-                isOpen={isUpdateAvatarModalOpen}
-            />
+            {isUpdateAvatarModalOpen && <ModalV2 close={() => setIsUpdateAvatarModalOpen(false)}>
+                <UpdateAvatarImage close={() => setIsUpdateAvatarModalOpen(false)} />
+            </ModalV2>}
             <Style>
                 <div className="avatar_block">
                     <img className="avatar_img" src={avatar ? avatar : noUserImage} alt="user avatar" />
