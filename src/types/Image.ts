@@ -1,4 +1,4 @@
-interface Image {
+export interface Image {
     _id: string,
     folder_id: string,
     name: string, // image_name
