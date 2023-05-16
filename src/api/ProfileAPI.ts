@@ -1,7 +1,7 @@
-import axios from "axios"
+import { myAxios } from "./config/config"
 
 export const getProfile = ({ setState }: { setState: (data: any) => void }) => {
-  axios.get("/profile").then(({ data }) => {
+  myAxios.get("/profile").then(({ data }) => {
     setState({
       username: data.data.username,
       avatar: data.data.avatar,

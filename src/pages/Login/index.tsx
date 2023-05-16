@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import Style from './style'
 // components
 import { H5 } from '../../components/Typography';
@@ -18,38 +18,52 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../contexts/authContext';
+import { AuthLogin } from '../../api/AuthAPI';
+
+import { toast } from 'react-toastify';
+import Loading from '../../components/Loading';
 
 const Login = () => {
-    const navigate = useNavigate()
-    const {setToken}= useAuth()
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+    const { setToken, token } = useAuth();
     const [data, setData] = useState({
         username: { value: "", error: "" },
         password: { value: "", error: "" },
     });
-    
-    
-    const handlerSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        axios
-        .post('https://image-project.onrender.com/auth/login', {
-                username: data.username.value,
-                password: data.password.value
-              })
-        .then( (response) => {
+
+    useEffect(() => {
+        if (token) {
             navigate(PATHS.HOME)
-            setToken(response.data.data.token,isRememberMeOn)
-        })
-        .catch( (error) => {
-            console.log(error.message)
-        });
-      };
-    
+        }
+    }, [])
+
+    const handlerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setIsLoading(true);
+
+        AuthLogin(data.username.value, data.password.value)
+            .then((token) => {
+                navigate(PATHS.HOME)
+                setToken(token, isRememberMeOn)
+            })
+            .catch((error) => {
+                toast.error(error.message)
+            }).finally(() => {
+                setIsLoading(false);
+            })
+    };
+
     const [isRememberMeOn, setIsRememberMeOn] = useState(false);
 
     const handelInputsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setData(prev => ({ ...prev, [e.target.name]: { value: e.target.value, error: "" } }))
     }, [setData])
 
+    if (isLoading) {
+        return <Loading />
+    }
+    
     return (
         <Style>
             <img src={LoginLargeShape} alt="login page" className='login_left_image' />
@@ -85,10 +99,10 @@ const Login = () => {
                     <CheckBox
                         onChange={() => setIsRememberMeOn(prev => !prev)}
                         value={isRememberMeOn}
-                        label="Remember Me" />                       
-                    <Button fullWidth margin='0.7rem 0' onClick={(e)=>{handlerSubmit}}>Login</Button>
+                        label="Remember Me" />
+                    <Button fullWidth margin='0.7rem 0' onClick={(e) => { handlerSubmit }}>Login</Button>
                 </form>
-                <CustomLink to={PATHS.SIGN_UP}>Don't have an account?</CustomLink>
+                <CustomLink to={PATHS.SIGN_UP}>Don't have an account? sign up now</CustomLink>
             </div>
         </Style>
     )

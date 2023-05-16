@@ -9,6 +9,7 @@ import Operations from '../../components/Operations'
 import { deleteFolders, getFolders } from '../../api/FoldersAPI'
 import { toast } from 'react-toastify'
 import Loading from '../../components/Loading'
+import requireAuth from '../../hocs/requireAuth'
 
 interface stateProps {
     active: boolean,
@@ -94,4 +95,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default requireAuth(Home)

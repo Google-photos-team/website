@@ -1,49 +1,49 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { authorizationHeader, defaults } from "../api/config/config";
 import { useNavigate } from "react-router";
 import { PATHS } from "../router";
+import { addTokenToTheAxios } from "../api/config/config";
 
-interface AuthContextProps{
-  setToken:(token:string,remmember:boolean)=>void;
-  logout:()=>void;
-    token:string;
+interface AuthContextProps {
+  setToken: (token: string, remmember: boolean) => void;
+  logout: () => void;
+  token: string;
 }
 
 const AuthContext = createContext<AuthContextProps>({
-  setToken:()=>{},
-  logout:()=>{},
-  token :"",
- 
+  setToken: () => { },
+  logout: () => { },
+  token: "",
+
 });
 
 export const useAuth = () => useContext(AuthContext);
 
 
-export const AuthProvider = ({ children }:{children:React.ReactNode}) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState("")
-  const [cookies, setCookie,removeCookie] = useCookies(['auth-token']);
-  const navigate = useNavigate() 
+  const [cookies, setCookie, removeCookie] = useCookies(['auth-token']);
+  const navigate = useNavigate()
   useEffect(() => {
-    if(cookies["auth-token"]){
-      authorizationHeader({token:cookies["auth-token"]});
+    if (cookies["auth-token"] !== 'undefined') {
       setToken(cookies["auth-token"])
+      addTokenToTheAxios(cookies["auth-token"]);
       navigate(PATHS.HOME)
     }
   }, [])
-  
-  const customSetToken = (token:string,rememberMe:boolean) =>{
-    if(rememberMe){
-      setCookie("auth-token",token)
-    }
-    setToken(token)
 
+  const customSetToken = (token: string, rememberMe: boolean) => {
+    if (rememberMe) {
+      setCookie("auth-token", token)
+    }
+    addTokenToTheAxios(token);
+    setToken(token)
   }
 
   return (
     <AuthContext.Provider value={{
-      setToken:customSetToken,
-      logout:()=>{},
+      setToken: customSetToken,
+      logout: () => { },
       token
     }}>
       {children}

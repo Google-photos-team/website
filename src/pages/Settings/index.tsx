@@ -6,6 +6,7 @@ import { Body1, H4 } from '../../components/Typography'
 import Avatar from './components/Avatar'
 import DangerZone from './components/DangerZone'
 import Style from './style'
+import requireAuth from '../../hocs/requireAuth'
 
 const Settings = () => {
     const [userName, setUserName] = useState("abdQaddora")
@@ -47,4 +48,4 @@ const Settings = () => {
     )
 }
 
-export default Settings
+export default requireAuth(Settings)
