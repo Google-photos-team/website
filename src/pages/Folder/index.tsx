@@ -9,6 +9,7 @@ import { deleteImages, getImages } from '../../api/ImagesAPI'
 import { toast } from 'react-toastify';
 import Loading from '../../components/Loading'
 import ModalV2 from '../../components/ModalV2'
+import requireAuth from '../../hocs/requireAuth'
 
 interface stateProps {
     active: boolean,
@@ -84,4 +85,4 @@ const Folder = () => {
     )
 }
 
-export default Folder
+export default requireAuth(Folder)

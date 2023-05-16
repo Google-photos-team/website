@@ -4,6 +4,7 @@ import data from "../../mock/folder.json"
 import { useLocation } from 'react-router'
 import { H5, Span } from '../../components/Typography'
 import ImageCard from '../../components/ImageCard'
+import requireAuth from '../../hocs/requireAuth'
 
 const Search = () => {
     const { search } = useLocation();
@@ -14,10 +15,10 @@ const Search = () => {
                 <Span weight={600} color='lightBlue'>"{decodeURI(search.split("=")[1])}"</Span>
             </H5>
             <div className="results_block">
-                {data.map((item) => <ImageCard {...item} />)}
+                {/* {data.map((item) => <ImageCard {...item} />)} */}
             </div>
         </Style>
     )
 }
 
-export default Search
+export default requireAuth(Search)
