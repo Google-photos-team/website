@@ -67,7 +67,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthContext.Provider value={{
       setToken: customSetToken,
-      logout: () => { },
+      logout: () => { 
+        removeCookie("auth-token")
+        addTokenToTheAxios('');
+        setToken('')
+      },
       token,
       user,
       setUser,

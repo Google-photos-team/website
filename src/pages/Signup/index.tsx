@@ -26,6 +26,7 @@ import { useAuth } from '../../contexts/authContext';
 import { AuthSignup } from '../../api/AuthAPI';
 import { toast } from 'react-toastify';
 import Loading from '../../components/Loading';
+import { signupSchema } from '../../validation/authValidation';
 const Signup = () => {
     const navigate = useNavigate()
     const { setToken, token } = useAuth()
@@ -51,14 +52,20 @@ const Signup = () => {
     const handlerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (acceptTerms) {
-            setIsLoading(true);
-
-            AuthSignup(data.username.value, data.password.value)
+            signupSchema.validate({
+                username: data.username.value,
+                password: data.password.value,
+                passwordConfirm: data.passwordConfirm.value
+            }, { abortEarly: false }).then(async () => {
+                setIsLoading(true);
+                AuthSignup(data.username.value, data.password.value)
                 .then(token => {
                     navigate(PATHS.HOME)
                     setToken(token, true)
-                }).catch((error) => {
-                    toast.error(error.message)
+                })}).catch(({errors}) => {
+                    errors.map((error:string)=>{
+                        toast.error(error)
+                    })
                 }).finally(() => {
                     setIsLoading(false);
                 })
@@ -77,7 +84,7 @@ const Signup = () => {
             <img src={LoginSmallShape} alt="login page" className='login_right_image' />
 
             <div className="form_container">
-                <H5 margin='0 0 20px' weight={700} transform="capitalize">login Into your Account</H5>
+                <H5 margin='0 0 20px' weight={700} transform="capitalize">Create new Account</H5>
                 <form onSubmit={handlerSubmit}>
                     <div className="input_group">
                         <FaUser className='input_group_icon' />

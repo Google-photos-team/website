@@ -22,9 +22,3 @@ export const AuthSignup = async (username: string, password: string) => {
     throw new Error(error.response.data.message)
   }
 }
-
-export const AuthLogout = async () => {
-  const { data } = await myAxios.post('https://image-project.onrender.com/auth/logout', {
-
-  })
-}

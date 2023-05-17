@@ -49,7 +49,7 @@ const Navbar = () => {
         <div
           className="icon"
           onClick={() => setIsMenuOpen(prev => !prev)}
-          onBlur={() => setIsMenuOpen(false)} tabIndex={0}>
+          tabIndex={0}>
           <img src={user.avatar || Avatar} alt="" />
           {isMenuOpen && <Menu />}
         </div>
