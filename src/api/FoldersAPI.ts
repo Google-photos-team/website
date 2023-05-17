@@ -22,10 +22,14 @@ export const createFolder = async (name: string) => {
   }
 }
 
-export const deleteFolders = ({ ids, handleAction }: { ids: string[], handleAction?: () => void }) => {
-  myAxios.post('/folders/delete', { folders: ids }).then((response) => {
-    if (handleAction) handleAction()
-  }).catch((error) => {
-    console.log(error)
-  })
+export const deleteFolders = async (folders: string[]) => {
+  try{
+    const {data} = await myAxios.post('/folders/delete', { folders })
+
+    if(data.status){
+      return data.data
+    }
+  }catch (error: any){
+    throw new Error(error.response.data.message)
+  }
 }

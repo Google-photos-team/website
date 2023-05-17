@@ -40,8 +40,14 @@ const Home = () => {
     }, [])
 
     const handleDelete = () => {
-        deleteFolders({ ids: select.selectedItems, handleAction: () => setData(prev => [...prev.filter(item => !select.selectedItems.find(x => x === item._id))]) })
-        setSelect({ active: false, selectedItems: [] })
+        deleteFolders(select.selectedItems)
+            .then(() => {
+                setData(prev => [...prev.filter(item => !select.selectedItems.find(x => x === item._id))])
+                setSelect({ active: false, selectedItems: [] })
+                toast.success("deleted successfully")
+            }).catch((error) => {
+                toast.error(error.message)
+            })
     }
 
     if (isLoading) {

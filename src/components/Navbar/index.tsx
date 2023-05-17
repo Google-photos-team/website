@@ -9,13 +9,14 @@ import Menu from './components/Menu'
 import Button from '../Button'
 import CustomLink from '../CustomLink'
 import { getProfile } from '../../api/ProfileAPI'
+import { useAuth } from '../../contexts/authContext'
 
 const Navbar = () => {
   const { search, pathname } = useLocation();
   const [searchValue, setSearchValue] = useState(decodeURI(search.split("=")[1] ? "" : ""));
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [user, setUser] = useState<any>({})
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {user} = useAuth();
 
 
   const navigate = useNavigate();
@@ -30,17 +31,7 @@ const Navbar = () => {
     }
   }
 
-  // get user profile
-  useEffect(() => {
-    getProfile()
-      .then((profile) => {
-        setUser(profile);
-      }).catch((error) => {
-        console.log(error.message)
-      })
-  }, [])
-
-  return (
+  return user.username ? (
     <Style>
       <div className="path">
         <CustomLink to={PATHS.HOME}>Home /</CustomLink>
@@ -68,7 +59,7 @@ const Navbar = () => {
         </div>
       </div>
     </Style>
-  )
+  ): <></>
 }
 
 export default Navbar
