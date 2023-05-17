@@ -22,6 +22,7 @@ import { AuthLogin } from '../../api/AuthAPI';
 
 import { toast } from 'react-toastify';
 import Loading from '../../components/Loading';
+import { loginSchema } from '../../validation/authValidation';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -40,15 +41,21 @@ const Login = () => {
 
     const handlerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setIsLoading(true);
-
-        AuthLogin(data.username.value, data.password.value)
+        loginSchema.validate({
+            username: data.username.value,
+            password: data.password.value,
+        }, { abortEarly: false }).then(async () => {
+            setIsLoading(true);
+            AuthLogin(data.username.value, data.password.value)
             .then((token) => {
                 navigate(PATHS.HOME)
                 setToken(token, isRememberMeOn)
             })
-            .catch((error) => {
-                toast.error(error.message)
+        })
+            .catch(({errors}) => {
+                errors.map((error:string)=>{
+                    toast.error(error)
+                })
             }).finally(() => {
                 setIsLoading(false);
             })
