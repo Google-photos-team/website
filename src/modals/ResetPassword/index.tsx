@@ -32,7 +32,7 @@ const ResetPassword = ({ close }: IProps) => {
         value={currentPassword}
         fullWidth
         type='password'
-        placeholder='name' />
+        placeholder='Current Password' />
 
       <Button margin="1rem 0 0" onClick={handleNext}>
         Next

@@ -6,14 +6,15 @@ import Style from './style'
 
 interface props {
   close: () => void,
+  setAvatar: (value: string) => void
 
 }
 
-const UpdateAvatarImage = ({ close }: props) => {
-  const [avatar, setAvatar] = useState("");
+const UpdateAvatarImage = ({ close ,setAvatar}: props) => {
+  const [tempAvatar, setTempAvatar] = useState("");
 
   const handelUpdate = () => {
-    // TODO: API CALL TO UPDATE PROFILE IMAGE
+    setAvatar(tempAvatar)
     close();
   }
 
@@ -21,7 +22,7 @@ const UpdateAvatarImage = ({ close }: props) => {
     <Style>
       <Body1 weight={500} color="black">Update your avatar image</Body1>
       <ImageInput
-        onChange={(value) => { setAvatar(value) }} />
+        onChange={(value) => { setTempAvatar(value) }} />
       <Button
         margin='1rem 0 0'
         fullWidth

@@ -2,15 +2,30 @@ import React from 'react'
 import Button from '../../components/Button';
 import { Body1, Body3 } from '../../components/Typography';
 import Style from './style'
+import { deleteProfile } from '../../api/ProfileAPI';
+import { toast } from 'react-toastify';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router';
+import { PATHS } from '../../router';
 
 interface props {
   close: () => void,
 }
 const DeleteAccount = ({ close }: props) => {
+  const [cookies, setCookie, removeCookie] = useCookies(['auth-token']);
+  const navigate = useNavigate();
+
   const handelDelete = () => {
-    // TODO: API CALL TO DELETE THE ACCOUNT
-    // TODO: NAVIGATE TO SIGN UP PAGE AND RESET LOGIN STATE
-    close();
+    deleteProfile()
+      .then(() => {
+        navigate(PATHS.SIGN_UP);
+        removeCookie("auth-token", { path: "/" })
+        close();
+      })
+      .catch((error) => {
+        toast.error(error.message || "Something went wrong!")
+        close();
+      })
   }
 
   return (

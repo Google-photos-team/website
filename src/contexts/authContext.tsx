@@ -10,7 +10,8 @@ interface AuthContextProps {
   user:{
     avatar: string;
     username: string;
-  }
+  },
+  setUser: (user: {username:string, avatar: string}) => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -20,7 +21,8 @@ const AuthContext = createContext<AuthContextProps>({
   user:{
     avatar: "",
     username: ""
-  }
+  },
+  setUser: () => {}
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -34,8 +36,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (cookies["auth-token"] !== undefined && cookies["auth-token"] !== "") {
       setToken(cookies["auth-token"])
+    }else{
+      setToken("")
     }
-  }, [])
+  }, [cookies["auth-token"]])
 
   useEffect(() => {
     if (token) {
@@ -65,7 +69,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setToken: customSetToken,
       logout: () => { },
       token,
-      user
+      user,
+      setUser,
     }}>
       {children}
     </AuthContext.Provider>

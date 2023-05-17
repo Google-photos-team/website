@@ -31,7 +31,7 @@ const Navbar = () => {
     }
   }
 
-  return user.username && (
+  return user.username ? (
     <Style>
       <div className="path">
         <CustomLink to={PATHS.HOME}>Home /</CustomLink>
@@ -59,7 +59,7 @@ const Navbar = () => {
         </div>
       </div>
     </Style>
-  )
+  ): <></>
 }
 
 export default Navbar

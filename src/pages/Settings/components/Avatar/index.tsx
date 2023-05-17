@@ -7,15 +7,16 @@ import ModalV2 from '../../../../components/ModalV2';
 import UpdateAvatarImage from '../../../../modals/UpdateAvatarImage';
 interface IProps {
     avatar?: string,
-    username: string
+    username: string,
+    setAvatar: (value: string) => void
 }
 
-const Avatar = ({ avatar, username }: IProps) => {
+const Avatar = ({ avatar, username , setAvatar}: IProps) => {
     const [isUpdateAvatarModalOpen, setIsUpdateAvatarModalOpen] = useState(false)
     return (
         <>
             {isUpdateAvatarModalOpen && <ModalV2 close={() => setIsUpdateAvatarModalOpen(false)}>
-                <UpdateAvatarImage close={() => setIsUpdateAvatarModalOpen(false)} />
+                <UpdateAvatarImage close={() => setIsUpdateAvatarModalOpen(false)} setAvatar={setAvatar}/>
             </ModalV2>}
             <Style>
                 <div className="avatar_block">
