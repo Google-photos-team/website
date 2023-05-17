@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../../components/Button'
 import InputFiled from '../../components/InputFiled'
 import Select from '../../components/Select'
@@ -7,10 +7,19 @@ import Avatar from './components/Avatar'
 import DangerZone from './components/DangerZone'
 import Style from './style'
 import requireAuth from '../../hocs/requireAuth'
+import { useAuth } from '../../contexts/authContext'
 
 const Settings = () => {
-    const [userName, setUserName] = useState("abdQaddora")
+    const { user } = useAuth();
+    const [userName, setUserName] = useState(user?.username || "")
     const [resolution, setResolution] = useState("high")
+
+    useEffect(() => {
+      setUserName(user?.username || "")
+    
+      return () => {}
+    }, [user])
+    
     return (
         <Style className='containerWidth'>
             <Avatar username={userName} />

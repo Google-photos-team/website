@@ -120,7 +120,7 @@ const Signup = () => {
                         value={acceptTerms}
                         label="Accept terms and conditions" />
 
-                    <Button fullWidth margin='0.7rem 0' onClick={(e) => handlerSubmit}>Login</Button>
+                    <Button fullWidth margin='0.7rem 0' onClick={(e) => handlerSubmit}>Sign up</Button>
                 </form>
                 <CustomLink to={PATHS.LOGIN}>Already have an account?</CustomLink>
             </div>
