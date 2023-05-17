@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
+import { Cookies, useCookies } from "react-cookie";
 import { addTokenToTheAxios } from "../api/config/config";
 
 interface AuthContextProps {
@@ -40,7 +40,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthContext.Provider value={{
       setToken: customSetToken,
-      logout: () => { },
+      logout: () => { 
+        removeCookie("auth-token")
+        addTokenToTheAxios('');
+        setToken('')
+      },
       token
     }}>
       {children}
