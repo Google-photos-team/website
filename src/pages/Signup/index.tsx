@@ -62,8 +62,10 @@ const Signup = () => {
                 .then(token => {
                     navigate(PATHS.HOME)
                     setToken(token, true)
-                })}).catch((error) => {
-                    toast.error(error.message)
+                })}).catch(({errors}) => {
+                    errors.map((error:string)=>{
+                        toast.error(error)
+                    })
                 }).finally(() => {
                     setIsLoading(false);
                 })
@@ -82,7 +84,7 @@ const Signup = () => {
             <img src={LoginSmallShape} alt="login page" className='login_right_image' />
 
             <div className="form_container">
-                <H5 margin='0 0 20px' weight={700} transform="capitalize">login Into your Account</H5>
+                <H5 margin='0 0 20px' weight={700} transform="capitalize">Create new Account</H5>
                 <form onSubmit={handlerSubmit}>
                     <div className="input_group">
                         <FaUser className='input_group_icon' />
@@ -125,7 +127,7 @@ const Signup = () => {
                         value={acceptTerms}
                         label="Accept terms and conditions" />
 
-                    <Button fullWidth margin='0.7rem 0' onClick={(e) => handlerSubmit}>Login</Button>
+                    <Button fullWidth margin='0.7rem 0' onClick={(e) => handlerSubmit}>Sign up</Button>
                 </form>
                 <CustomLink to={PATHS.LOGIN}>Already have an account?</CustomLink>
             </div>

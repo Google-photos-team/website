@@ -52,8 +52,10 @@ const Login = () => {
                 setToken(token, isRememberMeOn)
             })
         })
-            .catch((error) => {
-                toast.error(error.message)
+            .catch(({errors}) => {
+                errors.map((error:string)=>{
+                    toast.error(error)
+                })
             }).finally(() => {
                 setIsLoading(false);
             })
