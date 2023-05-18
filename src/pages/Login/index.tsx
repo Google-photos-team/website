@@ -43,24 +43,26 @@ const Login = () => {
         e.preventDefault()
         loginSchema.validate({
             username: data.username.value,
-            password: data.password.value,
         }, { abortEarly: false }).then(async () => {
             setIsLoading(true);
+
             AuthLogin(data.username.value, data.password.value)
-            .then((token) => {
-                navigate(PATHS.HOME)
-                setToken(token, isRememberMeOn)
+                .then((token) => {
+                    navigate(PATHS.HOME)
+                    setToken(token, isRememberMeOn);
+
+                }).catch((error) => {
+                    toast.error(error.message);
+                }).finally(() => {
+                    setIsLoading(false);
+                })
+        }).catch(({ errors }) => {
+            errors.map((error: string) => {
+                toast.error(error)
             })
         })
-            .catch(({errors}) => {
-                errors.map((error:string)=>{
-                    toast.error(error)
-                })
-            }).finally(() => {
-                setIsLoading(false);
-            })
     };
-
+    
     const [isRememberMeOn, setIsRememberMeOn] = useState(false);
 
     const handelInputsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +72,7 @@ const Login = () => {
     if (isLoading) {
         return <Loading />
     }
-    
+
     return (
         <Style>
             <img src={LoginLargeShape} alt="login page" className='login_left_image' />
@@ -107,7 +109,7 @@ const Login = () => {
                         onChange={() => setIsRememberMeOn(prev => !prev)}
                         value={isRememberMeOn}
                         label="Remember Me" />
-                    <Button fullWidth margin='0.7rem 0' onClick={(e) => { handlerSubmit }}>Login</Button>
+                    <Button fullWidth margin='0.7rem 0'>Login</Button>
                 </form>
                 <CustomLink to={PATHS.SIGN_UP}>Don't have an account? sign up now</CustomLink>
             </div>
