@@ -3,7 +3,6 @@ import Style from './style'
 import { useLocation } from 'react-router'
 import { H4, H5, Span } from '../../components/Typography'
 import ImageCard from '../../components/ImageCard'
-import requireAuth from '../../hocs/requireAuth'
 import { searchInImages } from '../../api/ImagesAPI'
 import Loading from '../../components/Loading'
 import { toast } from 'react-toastify'
@@ -44,4 +43,4 @@ const Search = () => {
     )
 }
 
-export default requireAuth(Search)
+export default Search

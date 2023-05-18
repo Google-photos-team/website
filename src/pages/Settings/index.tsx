@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../../components/Button'
 import InputFiled from '../../components/InputFiled'
 import Select from '../../components/Select'
@@ -7,13 +7,38 @@ import Avatar from './components/Avatar'
 import DangerZone from './components/DangerZone'
 import Style from './style'
 import requireAuth from '../../hocs/requireAuth'
+import { useAuth } from '../../contexts/authContext'
+import { updateProfile } from '../../api/ProfileAPI'
+import { toast } from 'react-toastify'
+import { object } from 'yup'
 
 const Settings = () => {
-    const [userName, setUserName] = useState("abdQaddora")
+    const { user, setUser } = useAuth();
+    const [username, setUserName] = useState(user?.username || "")
+    const [avatar, setAvatar] = useState(user?.avatar || "")
     const [resolution, setResolution] = useState("high")
+
+    useEffect(() => {
+      setUserName(user?.username || "")
+      setAvatar(user?.avatar || "")
+      return () => {}
+    }, [user])
+    
+    const handleSave = () => {
+  
+        updateProfile({ username, avatar})
+            .then(() => {
+                setUser({ username, avatar})
+                toast.success("Profile updated successfully!")
+            })
+            .catch((error) => {
+                toast.error(error.message || "Something went wrong!")
+            })
+
+    }
     return (
         <Style className='containerWidth'>
-            <Avatar username={userName} />
+            <Avatar username={user?.username} avatar={avatar} setAvatar={setAvatar} />
 
             <div className="settings_form">
                 <InputFiled
@@ -21,7 +46,7 @@ const Settings = () => {
                     min={5}
                     label='User name'
                     onChange={(e) => { setUserName(e.target.value) }}
-                    value={userName}
+                    value={username}
                     fullWidth
                 />
                 <div className="image_resolution">
@@ -40,7 +65,7 @@ const Settings = () => {
                 <DangerZone />
 
                 <div className="save_or_cancel">
-                    <Button>Save</Button>
+                    <Button onClick={() => handleSave()}>Save</Button>
                     <Button color='secondary'>Cancel</Button>
                 </div>
             </div>
