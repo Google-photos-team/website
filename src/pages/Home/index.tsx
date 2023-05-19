@@ -21,6 +21,8 @@ const Home = () => {
     const [addFileModal, setAddFileModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    const [operationLoading, setOperationLoading] = useState(false);
+
     const [select, setSelects] = useState<stateProps>({
         active: false,
         selectedItems: [],
@@ -39,15 +41,18 @@ const Home = () => {
         });
     }, [])
 
-    const handleDelete = () => {
-        deleteFolders(select.selectedItems)
-            .then(() => {
-                setData(prev => [...prev.filter(item => !select.selectedItems.find(x => x === item._id))])
-                setSelect({ active: false, selectedItems: [] })
-                toast.success("deleted successfully")
-            }).catch((error) => {
-                toast.error(error.message)
-            })
+    const handleDelete = async() => {
+        setOperationLoading(true);
+        await deleteFolders(select.selectedItems)
+        .then(() => {
+            setData(prev => [...prev.filter(item => !select.selectedItems.find(x => x === item._id))])
+            setSelect({ active: false, selectedItems: [] })
+            toast.success("deleted successfully")
+        }).catch((error) => {
+            toast.error(error.message)
+        })
+        
+        setOperationLoading(false);
     }
 
     if (isLoading) {
@@ -56,7 +61,7 @@ const Home = () => {
     
     return (
         <>
-            <Operations data={data} select={select} setSelect={setSelect} handleDelete={handleDelete} hideMove />
+            <Operations data={data} select={select} setSelect={setSelect} handleDelete={handleDelete} hideMove loading={operationLoading} />
             <Style className='containerWidth'>
                 <div className="addFolder" onClick={() => setAddFileModal(true)}>
                     <img src={AddIcon} alt="" />

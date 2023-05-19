@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Button from '../../components/Button';
 import InputFiled from '../../components/InputFiled';
 import Style from './style'
+import { resetPassword } from '../../api/AuthAPI';
+import { toast } from 'react-toastify';
 
 interface IProps {
   close: () => void,
@@ -13,13 +15,24 @@ const ResetPassword = ({ close }: IProps) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const handleNext = () => {
-    // TODO: API CALL TO CHECK THE PASSWORD
+    if(!currentPassword) return toast.error("Please enter current password");
     setIsFirstStep(false);
   }
 
-  const handleUpdate = () => {
+  const handleUpdate = async() => {
     // TODO: API CALL TO UPDATE THE PASSWORD
+    setLoading(true);
+    await resetPassword(currentPassword, newPassword)
+    .then(() => {
+      toast.success("Password updated successfully");
+    }).catch((err) => {
+      toast.error(err.message);
+    });
+    
+    setLoading(false);
     close();
   }
 
@@ -57,7 +70,7 @@ const ResetPassword = ({ close }: IProps) => {
           placeholder='confirm password' />
 
         <Button onClick={handleUpdate}>
-          Update Password
+          {loading ? "Loading..." :"Update Password"}
         </Button>
       </>
     }

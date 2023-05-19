@@ -1,10 +1,12 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Style from './style'
 import SelectIcon from "../../assets/SelectIcon.svg"
 import RemoveSelectIcon from "../../assets/RemoveSelectIcon.svg"
 import Trash from "../../assets/Trash.svg"
 import Move from "../../assets/Move.svg"
 import { Body1 } from '../Typography'
+import ModalV2 from '../ModalV2'
+import MoveImageModal from '../../modals/MoveImageModal'
 
 interface props {
   select: {
@@ -14,10 +16,14 @@ interface props {
   setSelect: (obj: { active?: boolean, selectedItems?: string[] }) => void,
   data: { _id: string }[],
   hideMove?: boolean,
-  handleDelete?: () => void
+  handleDelete?: () => void,
+  handleMove?: () => void,
+  loading?:boolean,
+  folder_id?:string,
 }
 
-const Operations = ({ select, setSelect, data, hideMove, handleDelete }: props) => {
+const Operations = ({ select, setSelect, data, hideMove, handleDelete, loading, folder_id,handleMove }: props) => {
+  const [isMoveModalOpen, setIsMoveModalOpen] = useState(false);
   return (
     <Style className='containerWidth'>
       <div className="selectBlock hoverClass"
@@ -34,7 +40,7 @@ const Operations = ({ select, setSelect, data, hideMove, handleDelete }: props) 
 
       {select.active &&
         <>
-          <div className={`iconsClass ${select.selectedItems.length > 0 ? "hoverClass" : "disabledClass"}`} onClick={() => {
+          <div className={`iconsClass ${select.selectedItems.length > 0 ? "hoverClass" : "disabledClass"} ${loading?"disabledClass":""}`} onClick={() => {
             if (select.selectedItems.length > 0) {
               handleDelete ? handleDelete() : ""
             }
@@ -43,20 +49,28 @@ const Operations = ({ select, setSelect, data, hideMove, handleDelete }: props) 
           </div>
 
           {hideMove ||
-            <div className={`iconsClass ${select.selectedItems.length > 0 ? "hoverClass" : "disabledClass"}`}>
+            <div className={`iconsClass ${select.selectedItems.length > 0 ? "hoverClass" : "disabledClass"} ${loading?"disabledClass":""}`} onClick={() => setIsMoveModalOpen(true)}>
               <img className='selectIcon' src={Move} alt="" />
             </div>}
+
+            {isMoveModalOpen && <ModalV2 close={() => { setIsMoveModalOpen(false); }}>
+                <MoveImageModal
+                    close={() => setIsMoveModalOpen(false)}
+                    folder_id={folder_id || ""}
+                    image_id={select.selectedItems}
+                    handImagesMove={handleMove}
+                />
+            </ModalV2>}
 
           <Body1 className='selectAll hoverClass'
             onClick={() => {
               if (select.selectedItems.length !== data.length) {
                 setSelect({ selectedItems: [...data.map(item => item._id)] })
               } else {
-                handleDelete ? handleDelete() : ""
                 setSelect({ selectedItems: [] })
               }
             }}
-          >{select.selectedItems.length !== data.length ? "Select All" : "Remove All"}</Body1>
+          >{select.selectedItems.length !== data.length ? "Select All" : "Clear"}</Body1>
         </>
 
       }

@@ -22,3 +22,14 @@ export const AuthSignup = async (username: string, password: string) => {
     throw new Error(error.response.data.message)
   }
 }
+
+export const resetPassword = async (old_password: string, new_password: string) => {
+  try{
+    const { data } = await myAxios.post('/auth/reset-password', { old_password, new_password })
+    if (data.status) {
+      return true
+    }
+  }catch (error: any){
+    throw new Error(error.response.data.message)
+  }
+}
