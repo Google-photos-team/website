@@ -23,7 +23,7 @@ const Menu = ({ className, typeOne, typeTwo, closeMenu, setFolderId, folder_id, 
                 <MoveImageModal
                     setFolderId={setFolderId}
                     close={() => setIsMoveModalOpen(false)}
-                    {...{ folder_id, image_id }} />
+                    {...{ folder_id, image_id:[image_id] }} />
             </ModalV2>}
 
             {deleteModal && <ModalV2 close={() => setDeleteModal(false)}>

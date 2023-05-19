@@ -1,31 +1,30 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Button from '../../components/Button';
 import { Body1, Body3 } from '../../components/Typography';
 import Style from './style'
 import { deleteProfile } from '../../api/ProfileAPI';
 import { toast } from 'react-toastify';
-import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router';
-import { PATHS } from '../../router';
+import { useAuth } from '../../contexts/authContext';
 
 interface props {
   close: () => void,
 }
 const DeleteAccount = ({ close }: props) => {
-  const [cookies, setCookie, removeCookie] = useCookies(['auth-token']);
-  const navigate = useNavigate();
+  const {logout} = useAuth();
+  const [loading, setLoading] = useState(false);
 
-  const handelDelete = () => {
-    deleteProfile()
+  const handelDelete = async() => {
+    setLoading(true);
+    await deleteProfile()
       .then(() => {
-        navigate(PATHS.SIGN_UP);
-        removeCookie("auth-token", { path: "/" })
+        logout();
         close();
       })
       .catch((error) => {
         toast.error(error.message || "Something went wrong!")
         close();
       })
+    setLoading(false);
   }
 
   return (
@@ -38,7 +37,7 @@ const DeleteAccount = ({ close }: props) => {
           No,cancel
         </Button>
         <Button color='danger' onClick={handelDelete}>
-          Delete
+          {loading ? "Loading..." :"Delete"}
         </Button>
       </div>
     </Style>

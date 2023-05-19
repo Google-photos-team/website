@@ -23,6 +23,8 @@ const Folder = () => {
 
     const [addImageModal, setAddImageModal] = useState(false);
 
+    const [operationLoading, setOperationLoading] = useState(false);
+
     const [select, setSelects] = useState<stateProps>({
         active: false,
         selectedItems: [],
@@ -45,9 +47,22 @@ const Folder = () => {
         setSelects(prev => ({ ...prev, ...obj }))
     }
 
-    const handleDelete = () => {
-        deleteImages(select.selectedItems, folder_id || "");
-        setData(prev => prev.filter(el => !select.selectedItems.includes(el._id)))
+    const handleDelete = async() => {
+        setOperationLoading(true);
+        await deleteImages(select.selectedItems, folder_id || "")
+        .then(() => {
+            setData(prev => prev.filter(el => !select.selectedItems.includes(el._id)))
+            setSelect({ active: false, selectedItems: [] });
+            toast.success("deleted successfully")
+        }).catch((error) => {
+            toast.error(error.message)
+        });
+        
+        setOperationLoading(false);
+    }
+
+    const handleMove = () => {
+        setData(prev => prev.filter(el => !select.selectedItems.includes(el._id)));
         setSelect({ active: false, selectedItems: [] });
     }
 
@@ -62,6 +77,9 @@ const Folder = () => {
                 select={select}
                 setSelect={setSelect}
                 handleDelete={handleDelete}
+                loading={operationLoading}
+                folder_id={folder_id || ""}
+                handleMove={handleMove}
             />
 
             <Style className='containerWidth'>
@@ -78,7 +96,7 @@ const Folder = () => {
                 <AddImage
                     close={() => setAddImageModal(false)}
                     folder_id={folder_id || ""}
-                    addImage={(image: Image) => { setData(prev => [image, ...prev]) }}
+                    addImage={(image: Image) => { setData(prev => [...prev, image]) }}
                 />
             </ModalV2>}
         </>
