@@ -3,6 +3,7 @@ import styled from "styled-components";
 const Style = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 15px;
 
   padding:30px 25px;
   @media (max-width: 580px) {

@@ -28,4 +28,5 @@ export const resetPasswordSchema = yup.object({
   .matches(/\d/, 'password should contain at least one number')
   .matches((/[^A-Za-z0-9]/), 'password should contain at least one special characters')
   .required(),
+  confirmPassword: yup.string().oneOf([yup.ref('password'), undefined], 'Passwords must match').required("This field is required")
 })
