@@ -8,13 +8,14 @@ import { moveImages } from '../../api/ImagesAPI';
 
 interface IProps {
   close: () => void,
-  setFolderId: (folder_id: string) => void,
+  setFolderId?: (folder_id: string) => void,
+  handImagesMove?: () => void,
   folder_id: string,
-  image_id: string
+  image_id: string[]
 }
 
 type TFolder = { value: string, label: string };
-const MoveImageModal = ({ close, folder_id, setFolderId, image_id }: IProps) => {
+const MoveImageModal = ({ close, folder_id, setFolderId, image_id, handImagesMove }: IProps) => {
   const [selectedFolder, setSelectedFolder] = useState<TFolder>({
     label: "",
     value: ""
@@ -50,12 +51,13 @@ const MoveImageModal = ({ close, folder_id, setFolderId, image_id }: IProps) => 
     moveImages({
       destination_folder_id: selectedFolder.value,
       source_folder_id: folder_id,
-      images: [image_id]
+      images: image_id
     }).then(() => {
-      toast.success("Image moved successfully");
-      setFolderId(selectedFolder.value);
+      toast.success("Moved successfully");
+      setFolderId && setFolderId(selectedFolder.value);
       setFolders([]);
       getOptions();
+      handImagesMove && handImagesMove();
     }).catch((error) => {
       toast.error(error.message as string)
     }).finally(() => {

@@ -2,49 +2,58 @@ import React, { useState } from 'react'
 import Button from '../../components/Button';
 import InputFiled from '../../components/InputFiled';
 import Style from './style'
+import { resetPassword } from '../../api/AuthAPI';
+import { toast } from 'react-toastify';
+import { resetPasswordSchema } from '../../validation/authValidation';
 
 interface IProps {
   close: () => void,
 }
 
 const ResetPassword = ({ close }: IProps) => {
-  const [isFirstStep, setIsFirstStep] = useState(true);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleNext = () => {
-    // TODO: API CALL TO CHECK THE PASSWORD
-    setIsFirstStep(false);
-  }
+  const [loading, setLoading] = useState(false);
 
-  const handleUpdate = () => {
+  const handleUpdate = async() => {
     // TODO: API CALL TO UPDATE THE PASSWORD
-    close();
+    if(newPassword !== confirmPassword) return toast.error("Password does not match");
+    
+    setLoading(true);
+    await resetPasswordSchema.validate({password: newPassword, confirmPassword})
+    .then(async() => {
+
+      await resetPassword(currentPassword, newPassword)
+      .then(() => {
+        toast.success("Password updated successfully");
+        close();
+      })
+    }).catch((err) => {
+      toast.error(err.message);
+    })
+    
+    setLoading(false);
+    
   }
 
   return <Style>
-    {isFirstStep ? <>
-      <InputFiled
-        label='Current Password'
-        name="folderName"
-        onChange={(e) => setCurrentPassword(e.target.value)}
-        value={currentPassword}
-        fullWidth
-        type='password'
-        placeholder='Current Password' />
+        <InputFiled
+          label='Current Password'
+          name="folderName"
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          value={currentPassword}
+          fullWidth
+          type='text'
+          placeholder='Current Password' />
 
-      <Button margin="1rem 0 0" onClick={handleNext}>
-        Next
-      </Button>
-    </> :
-      <>
         <InputFiled
           label='New password'
           onChange={(e) => setNewPassword(e.target.value)}
           value={newPassword}
           fullWidth
-          type='password'
+          type='text'
           placeholder='new password' />
 
         <InputFiled
@@ -53,14 +62,12 @@ const ResetPassword = ({ close }: IProps) => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           value={confirmPassword}
           fullWidth
-          type='password'
+          type='text'
           placeholder='confirm password' />
 
         <Button onClick={handleUpdate}>
-          Update Password
+          {loading ? "Loading..." :"Update Password"}
         </Button>
-      </>
-    }
   </Style>
 }
 

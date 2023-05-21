@@ -10,7 +10,6 @@ import requireAuth from '../../hocs/requireAuth'
 import { useAuth } from '../../contexts/authContext'
 import { updateProfile } from '../../api/ProfileAPI'
 import { toast } from 'react-toastify'
-import { object } from 'yup'
 
 const Settings = () => {
     const { user, setUser } = useAuth();
@@ -18,15 +17,16 @@ const Settings = () => {
     const [avatar, setAvatar] = useState(user?.avatar || "")
     const [resolution, setResolution] = useState("high")
 
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
       setUserName(user?.username || "")
       setAvatar(user?.avatar || "")
       return () => {}
     }, [user])
     
-    const handleSave = () => {
-  
-        updateProfile({ username, avatar})
+    const handleSave = async() => {
+        setLoading(true);
+        await updateProfile({ username, avatar})
             .then(() => {
                 setUser({ username, avatar})
                 toast.success("Profile updated successfully!")
@@ -34,6 +34,7 @@ const Settings = () => {
             .catch((error) => {
                 toast.error(error.message || "Something went wrong!")
             })
+        setLoading(false);
 
     }
     return (
@@ -65,7 +66,7 @@ const Settings = () => {
                 <DangerZone />
 
                 <div className="save_or_cancel">
-                    <Button onClick={() => handleSave()}>Save</Button>
+                    <Button onClick={() => handleSave()}>{loading? "Loading..." :"Save"}</Button>
                     <Button color='secondary'>Cancel</Button>
                 </div>
             </div>
