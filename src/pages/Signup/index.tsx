@@ -52,13 +52,13 @@ const Signup = () => {
     const handlerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (acceptTerms) {
-            signupSchema.validate({
+            await signupSchema.validate({
                 username: data.username.value,
                 password: data.password.value,
                 passwordConfirm: data.passwordConfirm.value
             }, { abortEarly: false }).then(async () => {
                 setIsLoading(true);
-                AuthSignup(data.username.value, data.password.value)
+               await AuthSignup(data.username.value, data.password.value)
                 .then(token => {
                     navigate(PATHS.HOME)
                     setToken(token, true)
